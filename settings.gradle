@@ -1,7 +1,13 @@
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.4.0'
+}
+
 rootProject.name = 'fintech-company-ab-2023'
 
 include 'product-engine'
 include 'payment-gate'
 include 'api'
 include 'origination'
+include 'product-engine:src:test:java'
+findProject(':product-engine:src:test:java')?.name = 'java'
 
