@@ -7,3 +7,11 @@ spring:
     url: jdbc:postgresql://host.docker.internal:5432/fintech
     username: postgres
     password: postgres
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    probes:
+      enabled: true
