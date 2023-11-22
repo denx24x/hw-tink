@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.cache_loan;
+package com.academy.fintech.pe;
 
 import com.academy.fintech.pe.Containers;
 import org.json.JSONException;
@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,23 +22,13 @@ import java.util.Calendar;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Testcontainers
 public class BlackBoxTest {
 
-    static PostgreSQLContainer postgres = new PostgreSQLContainer<>(
-            "postgres:15-alpine"
-    );
 
     @BeforeAll
     public static void setUpAll(){
-        postgres.start();
         Containers.appContainer.start();
-    }
-
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
     }
 
     /**
@@ -53,7 +45,7 @@ public class BlackBoxTest {
     }
 
     @Test
-    void testSimple() throws IOException, InterruptedException, JSONException {
+    void testCreateAndDisbursement() throws IOException, InterruptedException, JSONException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest createRequest =  HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:" + Containers.appContainer.getHttpPort() + "/createAgreement"))
