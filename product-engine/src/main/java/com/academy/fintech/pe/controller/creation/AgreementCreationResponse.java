@@ -1,7 +1,5 @@
 package com.academy.fintech.pe.controller.creation;
 
-import com.academy.fintech.pe.agreement.AgreementService;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,12 +17,12 @@ public class AgreementCreationResponse {
     private Optional<String> errorMessage;
     private Optional<Integer> agreementCode;
 
-    public AgreementCreationResponse(String errorMessage){
+    public AgreementCreationResponse(String errorMessage) {
         this.success = false;
         this.errorMessage = Optional.of(errorMessage);
     }
 
-    public AgreementCreationResponse(Integer agreementCode){
+    public AgreementCreationResponse(Integer agreementCode) {
         this.success = true;
         this.agreementCode = Optional.of(agreementCode);
     }

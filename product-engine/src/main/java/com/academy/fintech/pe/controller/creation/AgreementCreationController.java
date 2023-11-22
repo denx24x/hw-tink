@@ -4,7 +4,10 @@ import com.academy.fintech.pe.agreement.AgreementService;
 import com.academy.fintech.pe.product.Product;
 import com.academy.fintech.pe.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
@@ -14,19 +17,20 @@ public class AgreementCreationController {
     private AgreementService agreementService;
     @Autowired
     private ProductService productService;
+
     @PostMapping("/createAgreement")
     @ResponseBody
-    public AgreementCreationResponse createAgreement(@RequestBody AgreementCreationRequest request){
+    public AgreementCreationResponse createAgreement(@RequestBody AgreementCreationRequest request) {
         Optional<Product> tempProduct = this.productService.getProduct(request.product_code, request.product_version);
-        if(tempProduct.isEmpty()){
+        if (tempProduct.isEmpty()) {
             return new AgreementCreationResponse("No such product");
         }
         Product product = tempProduct.get();
 
-        if(!this.productService.checkProductConstraints(product, request)){
+        if (!this.productService.checkProductConstraints(product, request)) {
             return new AgreementCreationResponse("Product constraints failed");
         }
-        Integer id = this.agreementService.createAgreement(request);
+        Integer id = this.agreementService.createAgreement(request).getId();
         return new AgreementCreationResponse(id);
     }
 }

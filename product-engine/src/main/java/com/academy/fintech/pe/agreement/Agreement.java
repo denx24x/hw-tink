@@ -2,7 +2,6 @@ package com.academy.fintech.pe.agreement;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="agreement")
+@Table(name = "agreement")
 public class Agreement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

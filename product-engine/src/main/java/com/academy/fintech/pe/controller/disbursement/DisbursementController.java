@@ -6,7 +6,9 @@ import com.academy.fintech.pe.agreement.AgreementStatus;
 import com.academy.fintech.pe.payment_schedule.PaymentSchedule;
 import com.academy.fintech.pe.payment_schedule.PaymentScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
@@ -17,14 +19,15 @@ public class DisbursementController {
 
     @Autowired
     private PaymentScheduleService paymentScheduleService;
+
     @PostMapping("/disbursement")
-    public DisbursementResponse handleDisbursement(@RequestBody DisbursementRequest request){
+    public DisbursementResponse handleDisbursement(@RequestBody DisbursementRequest request) {
         Optional<Agreement> tempAgreement = agreementService.getAgreement(request.getAgreement_id());
-        if(tempAgreement.isEmpty()){
+        if (tempAgreement.isEmpty()) {
             return new DisbursementResponse("No such agreement");
         }
         Agreement agreement = tempAgreement.get();
-        if(agreement.getStatus() != AgreementStatus.NEW){
+        if (agreement.getStatus() != AgreementStatus.NEW) {
             return new DisbursementResponse("Already activated");
         }
         PaymentSchedule schedule = paymentScheduleService.createSchedule(agreement, request.getDisbursement_date());

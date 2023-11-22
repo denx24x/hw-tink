@@ -10,13 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name="payment_schedule")
+@Table(name = "payment_schedule")
 public class PaymentSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="agreement_id", referencedColumnName = "id")
+    @JoinColumn(name = "agreement_id", referencedColumnName = "id")
     private Agreement agreement;
 
 }

@@ -27,8 +27,13 @@ public class AppContainer extends GenericContainer<AppContainer> {
         super(image());
     }
 
+    private static Future<String> image() {
+        Path dockerFile = Paths.get(System.getProperty("user.dir"), "Dockerfile");
+        return new ImageFromDockerfile("test-app", true).withDockerfile(dockerFile);
+    }
+
     @Override
-    protected void configure(){
+    protected void configure() {
         super.configure();
         withEnv("spring.datasource.url", "jdbc:postgresql://host.docker.internal:" + postgres.getMappedPort(5432) + "/fintech");
         withEnv("spring.datasource.username", postgres.getUsername());
@@ -38,17 +43,12 @@ public class AppContainer extends GenericContainer<AppContainer> {
         withStartupTimeout(Duration.ofMinutes(1));
     }
 
-    private static Future<String> image(){
-        Path dockerFile = Paths.get(System.getProperty("user.dir"), "Dockerfile");
-        return new ImageFromDockerfile("test-app", true).withDockerfile(dockerFile);
-    }
-
-    public int getHttpPort(){
+    public int getHttpPort() {
         return this.getMappedPort(HTTP_PORT);
     }
 
     @Override
-    public void start(){
+    public void start() {
         postgres.start();
         super.start();
     }

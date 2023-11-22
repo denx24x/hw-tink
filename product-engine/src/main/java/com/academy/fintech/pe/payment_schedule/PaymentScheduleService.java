@@ -22,12 +22,12 @@ public class PaymentScheduleService {
     private static BigDecimal calcPMT(BigDecimal interest, int loan_term, BigDecimal pv, BigDecimal fv) {
         return interest.divide(
                         interest.add(BigDecimal.ONE)
-                        .pow(loan_term)
-                        .subtract(BigDecimal.ONE), 10, RoundingMode.HALF_EVEN)
+                                .pow(loan_term)
+                                .subtract(BigDecimal.ONE), 10, RoundingMode.HALF_EVEN)
                 .multiply(
                         pv.multiply(
-                                interest.add(
-                                        BigDecimal.ONE).pow(loan_term)
+                                        interest.add(
+                                                BigDecimal.ONE).pow(loan_term)
                                 )
                                 .add(fv)
                                 .negate()
@@ -37,26 +37,26 @@ public class PaymentScheduleService {
 
     private static BigDecimal calcFV(BigDecimal interest, int loan_term, BigDecimal c, BigDecimal pv) {
         return (interest.add(BigDecimal.ONE)
-                        .pow(loan_term)
-                        .subtract(BigDecimal.ONE)
-                        .divide(interest, 10, RoundingMode.HALF_EVEN)
-                        .multiply(c)
+                .pow(loan_term)
+                .subtract(BigDecimal.ONE)
+                .divide(interest, 10, RoundingMode.HALF_EVEN)
+                .multiply(c)
                 .add(
-                    pv.multiply(
-                            interest.add(BigDecimal.ONE)
-                                    .pow(loan_term)
+                        pv.multiply(
+                                interest.add(BigDecimal.ONE)
+                                        .pow(loan_term)
                         )
-                    )
-                ).negate();
+                )
+        ).negate();
     }
 
     private static BigDecimal calcPPMT(BigDecimal interest, int per, int loan_term, BigDecimal pv,
-                                      BigDecimal fv) {
+                                       BigDecimal fv) {
         return calcPMT(interest, loan_term, pv, fv).subtract(calcIPMT(interest, per, loan_term, pv, fv));
     }
 
     private static BigDecimal calcIPMT(BigDecimal interest, int per, int loan_term, BigDecimal pv,
-                                  BigDecimal fv) {
+                                       BigDecimal fv) {
         return calcFV(interest, per - 1, calcPMT(interest, loan_term, pv, fv), pv).multiply(interest);
     }
 

@@ -1,14 +1,9 @@
 package com.academy.fintech.pe;
 
-import com.academy.fintech.pe.Containers;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;
@@ -27,7 +22,7 @@ public class BlackBoxTest {
 
 
     @BeforeAll
-    public static void setUpAll(){
+    public static void setUpAll() {
         Containers.appContainer.start();
     }
 
@@ -37,7 +32,7 @@ public class BlackBoxTest {
     @Test
     void testReadiness() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request =  HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:" + Containers.appContainer.getHttpPort() + "/actuator/health/readiness"))
                 .GET().build();
         String result = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
@@ -47,7 +42,7 @@ public class BlackBoxTest {
     @Test
     void testCreateAndDisbursement() throws IOException, InterruptedException, JSONException {
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest createRequest =  HttpRequest.newBuilder()
+        HttpRequest createRequest = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:" + Containers.appContainer.getHttpPort() + "/createAgreement"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString("{\n" +
@@ -67,7 +62,7 @@ public class BlackBoxTest {
         int id = json.getInt("agreementCode");
         JSONObject requestData = new JSONObject();
         requestData.put("agreement_id", id);
-        requestData.put("disbursement_date",new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(Calendar.getInstance().getTime()));
+        requestData.put("disbursement_date", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(Calendar.getInstance().getTime()));
         HttpRequest disbursementRequest = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:" + Containers.appContainer.getHttpPort() + "/disbursement"))
                 .header("Content-Type", "application/json")

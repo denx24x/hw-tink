@@ -10,11 +10,12 @@ import java.util.Optional;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
-    public Optional<Product> getProduct(String code, String version){
+
+    public Optional<Product> getProduct(String code, String version) {
         return productRepository.findById(new ProductID(code, version));
     }
 
-    public boolean checkProductConstraints(Product product, AgreementCreationRequest data){
+    public boolean checkProductConstraints(Product product, AgreementCreationRequest data) {
         return product.checkConstraints(
                 data.getLoan_term(),
                 data.calcPrincipalAmount(),

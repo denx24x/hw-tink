@@ -15,6 +15,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductID implements Serializable {
-        private String code;
-        private String version;
+    private String code;
+    private String version;
 }

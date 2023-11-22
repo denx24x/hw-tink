@@ -12,7 +12,7 @@ public class Containers {
             .withNetworkAliases("test-app")
             .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger(AppContainer.class)));
 
-    public static void start(){
+    public static void start() {
         appContainer.start();
     }
 

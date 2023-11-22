@@ -17,7 +17,7 @@ public class AgreementService {
      * Product with such (code, version) should exist in database.
      * @param request data provided in request
      */
-    public Integer createAgreement(AgreementCreationRequest request){
+    public Agreement createAgreement(AgreementCreationRequest request){
         Agreement agreement = Agreement.builder()
                 .client_id(request.getClient_id())
                 .product_code(request.getProduct_code())
@@ -28,7 +28,7 @@ public class AgreementService {
                 .origination_amount(request.getOrigination_amount())
                 .status(AgreementStatus.NEW)
                 .build();
-        return agreementRepository.save(agreement).getId();
+        return agreementRepository.save(agreement);
     }
 
     public Optional<Agreement> getAgreement(int id){

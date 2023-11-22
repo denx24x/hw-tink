@@ -19,7 +19,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="schedule_id", referencedColumnName = "id")
+    @JoinColumn(name = "schedule_id", referencedColumnName = "id")
     private PaymentSchedule schedule;
     private Date payment_date;
     private BigDecimal period_payment;
