@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Optional;
 
+import static com.academy.fintech.pe.Util.nextMonth;
+
 @Service
 public class AgreementService {
     @Autowired
@@ -49,7 +51,7 @@ public class AgreementService {
         Agreement agreement = tempAgreement.get();
         agreement.setStatus(AgreementStatus.ACTIVE);
         agreement.setDisbursement_date(disbursementDate);
-
+        agreement.setNext_payment_date(nextMonth(disbursementDate));
         agreementRepository.save(agreement);
     }
 }

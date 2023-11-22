@@ -12,6 +12,8 @@ import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.academy.fintech.pe.Util.nextMonth;
+
 @Service
 public class PaymentScheduleService {
     @Autowired
@@ -60,15 +62,7 @@ public class PaymentScheduleService {
         return calcFV(interest, per - 1, calcPMT(interest, loan_term, pv, fv), pv).multiply(interest);
     }
 
-    /**
-     * Calculates next date of payment by changing month
-     */
-    private Date nextMonth(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.MONTH, 1);
-        return calendar.getTime();
-    }
+
 
     /**
      * Creates schedule object in database.
