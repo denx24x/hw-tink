@@ -5,6 +5,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.io.IOException;
 import java.net.URI;
@@ -13,14 +16,40 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class AgreementAndDisbursementTest {
+public class BlackBoxTest {
+
+    static PostgreSQLContainer postgres = new PostgreSQLContainer<>(
+            "postgres:15-alpine"
+    );
+
     @BeforeAll
     public static void setUpAll(){
+        postgres.start();
         Containers.appContainer.start();
+    }
+
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        registry.add("spring.datasource.username", postgres::getUsername);
+        registry.add("spring.datasource.password", postgres::getPassword);
+    }
+
+    /**
+     * Simple test that should always success
+     */
+    @Test
+    void testReadiness() throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request =  HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:" + Containers.appContainer.getHttpPort() + "/actuator/health/readiness"))
+                .GET().build();
+        String result = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+        assertEquals(result, "{\"status\":\"UP\"}");
     }
 
     @Test
