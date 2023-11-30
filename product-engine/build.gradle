@@ -1,0 +1,15 @@
+plugins{
+    id 'org.springframework.boot' version '3.1.4'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
+                'Main-Class': 'com.academy.fintech.pe.Application'
+        )
+    }
+}
+test {
+    useJUnitPlatform()
+}
