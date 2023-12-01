@@ -13,7 +13,7 @@ public class OriginationClientService {
 
     private final OriginationGrpcClient originationGrpcClient;
 
-    public String createApplication(ApplicationDto applicationDto) {
+    public int createApplication(ApplicationDto applicationDto) {
         ApplicationRequest request = mapDtoToRequest(applicationDto);
 
         ApplicationResponse response = originationGrpcClient.createApplication(request);

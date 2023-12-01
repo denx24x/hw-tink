@@ -3,6 +3,8 @@ package com.academy.fintech.api.rest.application;
 import com.academy.fintech.api.public_interface.application.dto.ApplicationDto;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class ApplicationMapper {
 
@@ -11,8 +13,8 @@ public class ApplicationMapper {
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .email(request.email())
-                .amount(request.amount())
-                .salary(request.salary())
+                .amount(request.amount().toString())
+                .salary(request.salary().toString())
                 .build();
     }
 

@@ -7,6 +7,6 @@ public record ApplicationDto (
         String firstName,
         String lastName,
         String email,
-        int salary,
-        int amount
+        String salary,
+        String amount
 ) { }
