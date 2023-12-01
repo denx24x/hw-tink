@@ -22,7 +22,7 @@ public class OriginationGrpcClient {
         try {
             return stub.create(applicationRequest);
         } catch (StatusRuntimeException e) {
-            if(e.getStatus().equals(Status.ALREADY_EXISTS)){
+            if (e.getStatus().equals(Status.ALREADY_EXISTS)) {
                 String id = e.getTrailers().get(Metadata.Key.of("applicationId", Metadata.ASCII_STRING_MARSHALLER));
                 throw new DuplicateApplicationException(Integer.parseInt(id));
             }
@@ -31,7 +31,7 @@ public class OriginationGrpcClient {
         }
     }
 
-    public CancelApplicationResponse cancelApplication(CancelApplicationRequest cancelApplicationRequest){
+    public CancelApplicationResponse cancelApplication(CancelApplicationRequest cancelApplicationRequest) {
         try {
             return stub.cancel(cancelApplicationRequest);
         } catch (StatusRuntimeException e) {

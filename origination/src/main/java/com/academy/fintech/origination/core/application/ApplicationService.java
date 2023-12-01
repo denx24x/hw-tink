@@ -21,13 +21,17 @@ public class ApplicationService {
     @Autowired
     private ApplicationRepository applicationRepository;
 
-    public Optional<Integer> checkDuplicate(Application application, Client client){
-        for(Application value : client.getApplicationList()){
-            if(Objects.equals(value.getRequested_disbursement_amount(), application.getRequested_disbursement_amount())
-             && value.getStatus() == ApplicationStatus.NEW){
+    /**
+     * Searches for application with {@code status = NEW} and same disbursement amount.
+     * If this application was created for longer than {@code DUPLICATE_TIMEOUT_MINUTES}, it is considered as duplicate.
+     */
+    public Optional<Integer> checkDuplicate(Application application, Client client) {
+        for (Application value : client.getApplicationList()) {
+            if (Objects.equals(value.getRequested_disbursement_amount(), application.getRequested_disbursement_amount())
+                    && value.getStatus() == ApplicationStatus.NEW) {
                 long diffMillis = Math.abs(value.getCreationTime().getTime() - application.getCreationTime().getTime());
                 long diffMinutes = TimeUnit.MINUTES.convert(diffMillis, TimeUnit.MILLISECONDS);
-                if(diffMinutes < DUPLICATE_TIMEOUT_MINUTES){
+                if (diffMinutes < DUPLICATE_TIMEOUT_MINUTES) {
                     return Optional.of(value.getId());
                 }
             }
@@ -35,14 +39,18 @@ public class ApplicationService {
         return Optional.empty();
     }
 
-    public Application createApplication(ApplicationRequest request, Client client) throws DuplicateApplicationException{
+    /**
+     * Created application for provided {@code client}.
+     * If application is considered duplicate, then returns original application id.
+     */
+    public Application createApplication(ApplicationRequest request, Client client) throws DuplicateApplicationException {
         Application applicationProto = Application.builder()
                 .client_id(client.getId())
                 .status(ApplicationStatus.NEW)
                 .requested_disbursement_amount(new BigDecimal(request.getDisbursementAmount()))
                 .build();
         Optional<Integer> duplicateId = checkDuplicate(applicationProto, client);
-        if(duplicateId.isPresent()){
+        if (duplicateId.isPresent()) {
             throw new DuplicateApplicationException(duplicateId.get());
         }
         return applicationRepository.save(applicationProto);
