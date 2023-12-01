@@ -1,8 +1,6 @@
 package com.academy.fintech.origination.grpc.application.v1;
 
-import com.academy.fintech.application.ApplicationRequest;
-import com.academy.fintech.application.ApplicationResponse;
-import com.academy.fintech.application.ApplicationServiceGrpc;
+import com.academy.fintech.application.*;
 import com.academy.fintech.origination.core.application.ApplicationService;
 import com.academy.fintech.origination.core.application.DuplicateApplicationException;
 import com.academy.fintech.origination.core.client.ClientService;
@@ -52,4 +50,10 @@ public class ApplicationController extends ApplicationServiceGrpc.ApplicationSer
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void cancel(CancelApplicationRequest request, StreamObserver<CancelApplicationResponse> responseObserver){
+        log.info("Got request: {}", request);
+
+        responseObserver.onCompleted();
+    }
 }

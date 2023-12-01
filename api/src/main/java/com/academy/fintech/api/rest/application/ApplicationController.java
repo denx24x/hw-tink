@@ -2,10 +2,7 @@ package com.academy.fintech.api.rest.application;
 
 import com.academy.fintech.api.core.application.ApplicationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,6 +15,11 @@ public class ApplicationController {
     @PostMapping
     public int create(@RequestBody ApplicationRequest applicationRequest) {
         return applicationService.createApplication(applicationMapper.mapRequestToDto(applicationRequest));
+    }
+
+    @DeleteMapping
+    public boolean cancel(@RequestBody CancelApplicationRequest cancelApplicationRequest){
+        return applicationService.cancelApplication(applicationMapper.mapRequestToDto(cancelApplicationRequest));
     }
 
 }
