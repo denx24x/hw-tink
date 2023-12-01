@@ -55,4 +55,13 @@ public class ApplicationService {
         }
         return applicationRepository.save(applicationProto);
     }
+
+    public boolean cancelApplication(int applicationId){
+        try {
+            applicationRepository.deleteById(applicationId);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }
