@@ -4,9 +4,12 @@ import com.academy.fintech.application.ApplicationRequest;
 import com.academy.fintech.application.ApplicationResponse;
 import com.academy.fintech.application.ApplicationServiceGrpc;
 import com.academy.fintech.origination.core.application.ApplicationService;
+import com.academy.fintech.origination.core.application.DuplicateApplicationException;
 import com.academy.fintech.origination.core.client.ClientService;
 import com.academy.fintech.origination.core.db.application.Application;
 import com.academy.fintech.origination.core.db.client.Client;
+import io.grpc.Metadata;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.lognet.springboot.grpc.GRpcService;
@@ -26,15 +29,26 @@ public class ApplicationController extends ApplicationServiceGrpc.ApplicationSer
     @Override
     public void create(ApplicationRequest request, StreamObserver<ApplicationResponse> responseObserver) {
         log.info("Got request: {}", request);
+        try {
+            Client client = clientService.getClient(request);
+            Application application = applicationService.createApplication(request, client);
+            responseObserver.onNext(
+                    ApplicationResponse.newBuilder()
+                            .setApplicationId(application.getId())
+                            .build()
+            );
+        }catch (DuplicateApplicationException e){
+            log.info("Duplicate application: {}", e.getDuplicateId());
 
-        Client client = clientService.getClient(request);
-        Application application = applicationService.createApplication(request, client);
+            Metadata metadata = new Metadata();
+            metadata.put(Metadata.Key.of("applicationId", Metadata.ASCII_STRING_MARSHALLER), String.valueOf(e.getDuplicateId()));
+            responseObserver.onError(
+                    Status.ALREADY_EXISTS.withDescription("Application already exists")
+                            .asRuntimeException(metadata)
+            );
 
-        responseObserver.onNext(
-                ApplicationResponse.newBuilder()
-                        .setApplicationId(application.getId())
-                        .build()
-        );
+        }
+
         responseObserver.onCompleted();
     }
 

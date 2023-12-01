@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/fintech-company-ab-2023.api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api/fintech-company-ab-2023.api.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/origination/fintech-company-ab-2023.origination.main.iml" filepath="$PROJECT_DIR$/.idea/modules/origination/fintech-company-ab-2023.origination.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/product-engine/fintech-company-ab-2023.product-engine.main.iml" filepath="$PROJECT_DIR$/.idea/modules/product-engine/fintech-company-ab-2023.product-engine.main.iml" />
+    </modules>
+  </component>
+</project>
