@@ -22,7 +22,7 @@ public class Client {
     private String lastName;
     private String email;
     private BigDecimal salary;
-    @OneToMany
-    @JoinColumn(name="id", referencedColumnName = "client_id", table = "application")
+
+    @OneToMany(targetEntity = Application.class)
     List<Application> applicationList;
 }
