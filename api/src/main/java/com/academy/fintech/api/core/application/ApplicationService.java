@@ -11,7 +11,7 @@ public class ApplicationService {
 
     private final OriginationClientService originationClientService;
 
-    public String createApplication(ApplicationDto applicationDto) {
+    public int createApplication(ApplicationDto applicationDto) {
         return originationClientService.createApplication(applicationDto);
     }
 
