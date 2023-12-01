@@ -1,0 +1,19 @@
+CREATE TABLE client (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR NOT NULL,
+    last_name VARCHAR NOT NULL,
+    email VARCHAR UNIQUE NOT NULL,
+    salary VARCHAR NOT NULL
+);
+
+CREATE TYPE APPLICATION_STATUS AS ENUM ('NEW', 'SCORING', 'ACCEPTED', 'ACTIVE', 'CLOSED');
+CREATE CAST (varchar AS APPLICATION_STATUS) WITH INOUT AS IMPLICIT;
+
+CREATE TABLE application (
+    id SERIAL PRIMARY KEY,
+    client_id INTEGER NOT NULL,
+    requested_disbursement_amount NUMERIC NOT NULL,
+    status APPLICATION_STATUS NOT NULL,
+    creation_time DATE NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES client (id)
+);
