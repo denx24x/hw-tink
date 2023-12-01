@@ -5,9 +5,11 @@ import com.academy.fintech.api.public_interface.application.dto.ApplicationDto;
 import com.academy.fintech.application.ApplicationRequest;
 import com.academy.fintech.application.ApplicationResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class OriginationClientService {
 
@@ -15,10 +17,14 @@ public class OriginationClientService {
 
     public int createApplication(ApplicationDto applicationDto) {
         ApplicationRequest request = mapDtoToRequest(applicationDto);
+        try {
+            ApplicationResponse response = originationGrpcClient.createApplication(request);
+            return response.getApplicationId();
+        }catch (DuplicateApplicationException e){
+            log.info(e.getMessage());
+            return e.getDuplicateId();
+        }
 
-        ApplicationResponse response = originationGrpcClient.createApplication(request);
-
-        return response.getApplicationId();
     }
 
     private static ApplicationRequest mapDtoToRequest(ApplicationDto applicationDto) {

@@ -1,13 +1,13 @@
 package com.academy.fintech.api.core.origination.client.grpc;
 
+import com.academy.fintech.api.core.origination.client.DuplicateApplicationException;
 import com.academy.fintech.application.ApplicationRequest;
 import com.academy.fintech.application.ApplicationResponse;
 import com.academy.fintech.application.ApplicationServiceGrpc;
 import com.academy.fintech.application.ApplicationServiceGrpc.ApplicationServiceBlockingStub;
-import io.grpc.Channel;
-import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
+import io.grpc.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.Meta;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -21,10 +21,14 @@ public class OriginationGrpcClient {
         this.stub = ApplicationServiceGrpc.newBlockingStub(channel);
     }
 
-    public ApplicationResponse createApplication(ApplicationRequest applicationRequest) {
+    public ApplicationResponse createApplication(ApplicationRequest applicationRequest) throws DuplicateApplicationException {
         try {
             return stub.create(applicationRequest);
         } catch (StatusRuntimeException e) {
+            if(e.getStatus().equals(Status.ALREADY_EXISTS)){
+                String id = e.getTrailers().get(Metadata.Key.of("applicationId", Metadata.ASCII_STRING_MARSHALLER));
+                throw new DuplicateApplicationException(Integer.parseInt(id));
+            }
             log.error("Got error from Origination by request: {}", applicationRequest, e);
             throw e;
         }

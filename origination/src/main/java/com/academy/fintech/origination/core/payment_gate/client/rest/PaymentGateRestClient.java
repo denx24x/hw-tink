@@ -1,13 +1,13 @@
-package com.academy.fintech.origination.core.product_engine.client.rest;
+package com.academy.fintech.origination.core.payment_gate.client.rest;
 
 import org.springframework.web.client.RestTemplate;
 
-public class ProductEngineRestClient {
+public class PaymentGateRestClient {
     private final RestTemplate restTemplate = new RestTemplate();
     private final int port;
     private final String host;
 
-    public ProductEngineRestClient(ProductEngineRestClientConfiguration property) {
+    public PaymentGateRestClient(PaymentGateRestClientConfiguration property) {
         this.port = property.port();
         this.host = property.host();
     }

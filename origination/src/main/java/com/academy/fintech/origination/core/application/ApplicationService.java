@@ -16,14 +16,15 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class ApplicationService {
 
-    public final static int DUPLICATE_TIMEOUT_MINUTES = 2;
+    public final static int DUPLICATE_TIMEOUT_MINUTES = 1;
 
     @Autowired
     private ApplicationRepository applicationRepository;
 
     public Optional<Integer> checkDuplicate(Application application, Client client){
         for(Application value : client.getApplicationList()){
-            if(Objects.equals(value.getRequested_disbursement_amount(), application.getRequested_disbursement_amount())){
+            if(Objects.equals(value.getRequested_disbursement_amount(), application.getRequested_disbursement_amount())
+             && value.getStatus() == ApplicationStatus.NEW){
                 long diffMillis = Math.abs(value.getCreationTime().getTime() - application.getCreationTime().getTime());
                 long diffMinutes = TimeUnit.MINUTES.convert(diffMillis, TimeUnit.MILLISECONDS);
                 if(diffMinutes < DUPLICATE_TIMEOUT_MINUTES){
@@ -34,13 +35,16 @@ public class ApplicationService {
         return Optional.empty();
     }
 
-    public Application createApplication(ApplicationRequest request, Client client){
+    public Application createApplication(ApplicationRequest request, Client client) throws DuplicateApplicationException{
         Application applicationProto = Application.builder()
                 .client_id(client.getId())
                 .status(ApplicationStatus.NEW)
                 .requested_disbursement_amount(new BigDecimal(request.getDisbursementAmount()))
                 .build();
         Optional<Integer> duplicateId = checkDuplicate(applicationProto, client);
+        if(duplicateId.isPresent()){
+            throw new DuplicateApplicationException(duplicateId.get());
+        }
         return applicationRepository.save(applicationProto);
     }
 }
