@@ -54,6 +54,12 @@ public class ApplicationController extends ApplicationServiceGrpc.ApplicationSer
     public void cancel(CancelApplicationRequest request, StreamObserver<CancelApplicationResponse> responseObserver) {
         log.info("Got request: {}", request);
 
+        boolean result = applicationService.cancelApplication(request.getApplicationId());
+        responseObserver.onNext(
+                CancelApplicationResponse.newBuilder()
+                        .setSuccess(result)
+                        .build()
+        );
         responseObserver.onCompleted();
     }
 }
