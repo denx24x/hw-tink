@@ -18,24 +18,6 @@ public class OriginationClientService {
 
     private final OriginationGrpcClient originationGrpcClient;
 
-    public int createApplication(ApplicationDto applicationDto) {
-        ApplicationRequest request = mapDtoToRequest(applicationDto);
-        try {
-            ApplicationResponse response = originationGrpcClient.createApplication(request);
-            return response.getApplicationId();
-        }catch (DuplicateApplicationException e){
-            log.info(e.getMessage());
-            return e.getDuplicateId();
-        }
-
-    }
-
-    public boolean cancelApplication(CancelApplicationDto cancelApplicationDto){
-        CancelApplicationRequest request = mapDtoToRequest(cancelApplicationDto);
-        CancelApplicationResponse response = originationGrpcClient.cancelApplication(request);
-        return response.getSuccess();
-    }
-
     private static ApplicationRequest mapDtoToRequest(ApplicationDto applicationDto) {
         return ApplicationRequest.newBuilder()
                 .setFirstName(applicationDto.firstName())
@@ -46,10 +28,32 @@ public class OriginationClientService {
                 .build();
     }
 
-    private static CancelApplicationRequest mapDtoToRequest(CancelApplicationDto cancelApplicationDto){
+    private static CancelApplicationRequest mapDtoToRequest(CancelApplicationDto cancelApplicationDto) {
         return CancelApplicationRequest.newBuilder()
                 .setApplicationId(cancelApplicationDto.applicationId())
                 .build();
+    }
+
+    /**
+     * Makes application request.
+     * Logs origination errors.
+     */
+    public int createApplication(ApplicationDto applicationDto) {
+        ApplicationRequest request = mapDtoToRequest(applicationDto);
+        try {
+            ApplicationResponse response = originationGrpcClient.createApplication(request);
+            return response.getApplicationId();
+        } catch (DuplicateApplicationException e) {
+            log.info(e.getMessage());
+            return e.getDuplicateId();
+        }
+
+    }
+
+    public boolean cancelApplication(CancelApplicationDto cancelApplicationDto) {
+        CancelApplicationRequest request = mapDtoToRequest(cancelApplicationDto);
+        CancelApplicationResponse response = originationGrpcClient.cancelApplication(request);
+        return response.getSuccess();
     }
 
 }

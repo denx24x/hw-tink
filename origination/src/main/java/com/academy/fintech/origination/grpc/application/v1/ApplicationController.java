@@ -35,7 +35,7 @@ public class ApplicationController extends ApplicationServiceGrpc.ApplicationSer
                             .setApplicationId(application.getId())
                             .build()
             );
-        }catch (DuplicateApplicationException e){
+        } catch (DuplicateApplicationException e) {
             log.info("Duplicate application: {}", e.getDuplicateId());
 
             Metadata metadata = new Metadata();
@@ -51,7 +51,7 @@ public class ApplicationController extends ApplicationServiceGrpc.ApplicationSer
     }
 
     @Override
-    public void cancel(CancelApplicationRequest request, StreamObserver<CancelApplicationResponse> responseObserver){
+    public void cancel(CancelApplicationRequest request, StreamObserver<CancelApplicationResponse> responseObserver) {
         log.info("Got request: {}", request);
 
         responseObserver.onCompleted();

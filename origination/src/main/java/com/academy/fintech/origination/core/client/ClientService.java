@@ -14,14 +14,18 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public Client getClient(ApplicationRequest request){
+    /**
+     * Creates client using provided {@code request}.
+     * If client with such email already exists, returns this client.
+     */
+    public Client getClient(ApplicationRequest request) {
         Client client = clientRepository.findClientByEmail(request.getEmail());
-        if(client == null){
+        if (client == null) {
             client = clientRepository.save(Client.builder()
-                            .firstName(request.getFirstName())
-                            .lastName(request.getLastName())
-                            .email(request.getEmail())
-                            .salary(new BigDecimal(request.getSalary()))
+                    .firstName(request.getFirstName())
+                    .lastName(request.getLastName())
+                    .email(request.getEmail())
+                    .salary(new BigDecimal(request.getSalary()))
                     .build());
         }
         return client;
