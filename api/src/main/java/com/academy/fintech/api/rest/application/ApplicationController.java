@@ -16,7 +16,7 @@ public class ApplicationController {
     private final ApplicationMapper applicationMapper;
 
     @PostMapping
-    public String create(@RequestBody ApplicationRequest applicationRequest) {
+    public int create(@RequestBody ApplicationRequest applicationRequest) {
         return applicationService.createApplication(applicationMapper.mapRequestToDto(applicationRequest));
     }
 
