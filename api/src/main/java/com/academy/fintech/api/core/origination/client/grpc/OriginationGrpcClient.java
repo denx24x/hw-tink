@@ -7,7 +7,6 @@ import com.academy.fintech.application.ApplicationServiceGrpc;
 import com.academy.fintech.application.ApplicationServiceGrpc.ApplicationServiceBlockingStub;
 import io.grpc.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.jpa.repository.Meta;
 import org.springframework.stereotype.Component;
 
 @Slf4j

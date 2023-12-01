@@ -30,6 +30,15 @@ services:
     build: ./product-engine
     ports:
       - '8083:8083'
+  origination:
+    build: ./origination
+    ports:
+      - '8084:8084'
+  api:
+    build: ./api
+    ports:
+      - '8085:8085'
+
 
 volumes:
   db:
