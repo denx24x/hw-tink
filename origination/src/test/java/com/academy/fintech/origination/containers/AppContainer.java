@@ -13,7 +13,7 @@ import java.util.concurrent.Future;
 
 public class AppContainer extends GenericContainer<AppContainer> {
 
-    private static final int HTTP_PORT = 8084;
+    private static final int GRPC_PORT = 9094;
 
     @Container
     static PostgreSQLContainer postgres = new PostgreSQLContainer<>(
@@ -38,13 +38,13 @@ public class AppContainer extends GenericContainer<AppContainer> {
         withEnv("spring.datasource.url", "jdbc:postgresql://host.docker.internal:" + postgres.getMappedPort(5432) + "/fintech_origination");
         withEnv("spring.datasource.username", postgres.getUsername());
         withEnv("spring.datasource.password", postgres.getPassword());
-        withExposedPorts(HTTP_PORT);
-        waitingFor(Wait.forHttp("/actuator/health/readiness").forPort(HTTP_PORT));
+        withExposedPorts(GRPC_PORT);
+        waitingFor(Wait.forHttp("/actuator/health/readiness").forPort(GRPC_PORT));
         withStartupTimeout(Duration.ofMinutes(1));
     }
 
     public int getHttpPort() {
-        return this.getMappedPort(HTTP_PORT);
+        return this.getMappedPort(GRPC_PORT);
     }
 
     @Override
