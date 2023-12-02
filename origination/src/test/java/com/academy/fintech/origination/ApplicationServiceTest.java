@@ -32,7 +32,7 @@ public class ApplicationServiceTest {
     private ApplicationService applicationService;
 
     @Test
-    public void checkDuplicatePositiveTest() {
+    public void checkDuplicateEmptyTest() {
         Date firstTime = new Date();
 
         Application first_application = Application.builder()
@@ -58,7 +58,7 @@ public class ApplicationServiceTest {
     }
 
     @Test
-    public void checkDuplicateNegativeTest() {
+    public void checkSingleDuplicateTest() {
         Date firstTime = new Date();
         Date secondTime = new Date(firstTime.getTime() - TimeUnit.SECONDS.toMillis(10));
 
