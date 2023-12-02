@@ -32,7 +32,7 @@ public class BlackBoxTest {
     void testReadiness() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:" + Containers.appContainer.getHttpPort() + "/actuator/health/readiness"))
+                .uri(URI.create("http://host.docker.internal:" + Containers.appContainer.getHttpPort() + "/actuator/health/readiness"))
                 .GET().build();
         String result = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
         Assertions.assertEquals(result, "{\"status\":\"UP\"}");
