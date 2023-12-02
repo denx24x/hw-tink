@@ -36,6 +36,7 @@ public class ApplicationController extends ApplicationServiceGrpc.ApplicationSer
                             .build()
             );
             log.info("Response id: {}", application.getId());
+            responseObserver.onCompleted();
         } catch (DuplicateApplicationException e) {
             log.info("Duplicate application: {}", e.getDuplicateId());
 
@@ -48,7 +49,7 @@ public class ApplicationController extends ApplicationServiceGrpc.ApplicationSer
             log.info("Response id: {}", e.getDuplicateId());
         }
 
-        responseObserver.onCompleted();
+
     }
 
     @Override

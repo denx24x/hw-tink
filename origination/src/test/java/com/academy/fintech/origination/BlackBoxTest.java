@@ -4,6 +4,8 @@ import com.academy.fintech.application.*;
 import com.academy.fintech.origination.core.application.DuplicateApplicationException;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Metadata;
+import io.grpc.StatusRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -65,7 +67,7 @@ public class BlackBoxTest {
                 .setDisbursementAmount("123.123")
                 .setSalary("123")
                 .build());
-        DuplicateApplicationException exception = Assertions.assertThrows(DuplicateApplicationException.class,
+        StatusRuntimeException exception = Assertions.assertThrows(StatusRuntimeException.class,
                 () -> {
                     stub.create(ApplicationRequest.newBuilder()
                             .setEmail("123@123.ru")
@@ -75,6 +77,8 @@ public class BlackBoxTest {
                             .setSalary("123")
                             .build());
                 });
+        Assertions.assertTrue(exception.getTrailers().containsKey(Metadata.Key.of("applicationId", Metadata.ASCII_STRING_MARSHALLER)));
+        Assertions.assertEquals(exception.getTrailers().get(Metadata.Key.of("applicationId", Metadata.ASCII_STRING_MARSHALLER)), String.valueOf(applicationResponse.getApplicationId()));
     }
 
     @Test

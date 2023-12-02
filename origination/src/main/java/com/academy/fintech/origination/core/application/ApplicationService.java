@@ -30,8 +30,10 @@ public class ApplicationService {
      */
     public Optional<Integer> checkDuplicate(Application application, Client client) {
         Date currentTime = new Date();
+        log.info(currentTime.toString());
         List<Application> applicationList = applicationRepository.findByClientIdAndRequestedDisbursementAmountAndStatus(client.getId(), application.getRequestedDisbursementAmount(), ApplicationStatus.NEW);
         for (Application value : applicationList) {
+            log.info(value.getCreationTime().toString());
             long diffMillis = Math.abs(value.getCreationTime().getTime() - currentTime.getTime());
             long diffMinutes = TimeUnit.MINUTES.convert(diffMillis, TimeUnit.MILLISECONDS);
             log.info("{}, {}", diffMinutes, diffMillis);
