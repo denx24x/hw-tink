@@ -35,7 +35,7 @@ public class AppContainer extends GenericContainer<AppContainer> {
     @Override
     protected void configure() {
         super.configure();
-        withEnv("spring.datasource.url", "jdbc:postgresql://host.docker.internal:" + postgres.getMappedPort(5432) + "/fintech");
+        withEnv("spring.datasource.url", "jdbc:postgresql://host.docker.internal:" + postgres.getMappedPort(5432) + "/fintech_origination");
         withEnv("spring.datasource.username", postgres.getUsername());
         withEnv("spring.datasource.password", postgres.getPassword());
         withExposedPorts(HTTP_PORT);
