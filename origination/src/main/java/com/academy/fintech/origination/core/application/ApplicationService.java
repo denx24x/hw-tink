@@ -5,14 +5,17 @@ import com.academy.fintech.origination.core.db.application.Application;
 import com.academy.fintech.origination.core.db.application.ApplicationRepository;
 import com.academy.fintech.origination.core.db.application.ApplicationStatus;
 import com.academy.fintech.origination.core.db.client.Client;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 public class ApplicationService {
 
@@ -26,14 +29,14 @@ public class ApplicationService {
      * If this application was created for longer than {@code DUPLICATE_TIMEOUT_MINUTES}, it is considered as duplicate.
      */
     public Optional<Integer> checkDuplicate(Application application, Client client) {
-        for (Application value : client.getApplicationList()) {
-            if (Objects.equals(value.getRequested_disbursement_amount(), application.getRequested_disbursement_amount())
-                    && value.getStatus() == ApplicationStatus.NEW) {
-                long diffMillis = Math.abs(value.getCreationTime().getTime() - application.getCreationTime().getTime());
-                long diffMinutes = TimeUnit.MINUTES.convert(diffMillis, TimeUnit.MILLISECONDS);
-                if (diffMinutes < DUPLICATE_TIMEOUT_MINUTES) {
-                    return Optional.of(value.getId());
-                }
+        Date currentTime = new Date();
+        List<Application> applicationList = applicationRepository.findByClientIdAndRequestedDisbursementAmountAndStatus(client.getId(), application.getRequestedDisbursementAmount(), ApplicationStatus.NEW);
+        for (Application value : applicationList) {
+            long diffMillis = Math.abs(value.getCreationTime().getTime() - currentTime.getTime());
+            long diffMinutes = TimeUnit.MINUTES.convert(diffMillis, TimeUnit.MILLISECONDS);
+            log.info("{}, {}", diffMinutes, diffMillis);
+            if (diffMinutes <= DUPLICATE_TIMEOUT_MINUTES) {
+                return Optional.of(value.getId());
             }
         }
         return Optional.empty();
@@ -45,22 +48,24 @@ public class ApplicationService {
      */
     public Application createApplication(ApplicationRequest request, Client client) throws DuplicateApplicationException {
         Application applicationProto = Application.builder()
-                .client_id(client.getId())
+                .clientId(client.getId())
                 .status(ApplicationStatus.NEW)
-                .requested_disbursement_amount(new BigDecimal(request.getDisbursementAmount()))
+                .requestedDisbursementAmount(new BigDecimal(request.getDisbursementAmount()))
+                .creationTime(new Date())
                 .build();
         Optional<Integer> duplicateId = checkDuplicate(applicationProto, client);
         if (duplicateId.isPresent()) {
             throw new DuplicateApplicationException(duplicateId.get());
         }
+
         return applicationRepository.save(applicationProto);
     }
 
-    public boolean cancelApplication(int applicationId){
+    public boolean cancelApplication(int applicationId) {
         try {
             applicationRepository.deleteById(applicationId);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

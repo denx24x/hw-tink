@@ -30,6 +30,7 @@ public class AppContainer extends GenericContainer<AppContainer> {
     }
 
     private static Future<String> image() {
+        System.out.println(System.getProperty("user.dir"));
         Path dockerFile = Paths.get(System.getProperty("user.dir"), "Dockerfile");
         return new ImageFromDockerfile("test-origination", true).withDockerfile(dockerFile);
     }
@@ -46,6 +47,10 @@ public class AppContainer extends GenericContainer<AppContainer> {
     }
 
     public int getHttpPort() {
+        return this.getMappedPort(HTTP_PORT);
+    }
+
+    public int getGrpcPort() {
         return this.getMappedPort(GRPC_PORT);
     }
 

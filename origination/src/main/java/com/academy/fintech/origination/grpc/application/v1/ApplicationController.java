@@ -35,6 +35,7 @@ public class ApplicationController extends ApplicationServiceGrpc.ApplicationSer
                             .setApplicationId(application.getId())
                             .build()
             );
+            log.info("Response id: {}", application.getId());
         } catch (DuplicateApplicationException e) {
             log.info("Duplicate application: {}", e.getDuplicateId());
 
@@ -44,7 +45,7 @@ public class ApplicationController extends ApplicationServiceGrpc.ApplicationSer
                     Status.ALREADY_EXISTS.withDescription("Application already exists")
                             .asRuntimeException(metadata)
             );
-
+            log.info("Response id: {}", e.getDuplicateId());
         }
 
         responseObserver.onCompleted();
