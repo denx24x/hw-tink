@@ -29,7 +29,7 @@ public class AppContainer extends GenericContainer<AppContainer> {
 
     private static Future<String> image() {
         Path dockerFile = Paths.get(System.getProperty("user.dir"), "Dockerfile");
-        return new ImageFromDockerfile("test-app", true).withDockerfile(dockerFile);
+        return new ImageFromDockerfile("test-origination", true).withDockerfile(dockerFile);
     }
 
     @Override
