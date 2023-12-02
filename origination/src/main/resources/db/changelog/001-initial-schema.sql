@@ -11,6 +11,6 @@ CREATE TABLE application (
     client_id INTEGER NOT NULL,
     requested_disbursement_amount NUMERIC NOT NULL,
     status VARCHAR NOT NULL,
-    creation_time DATE NOT NULL,
+    creation_time TIMESTAMP NOT NULL,
     FOREIGN KEY (client_id) REFERENCES client (id)
 );
