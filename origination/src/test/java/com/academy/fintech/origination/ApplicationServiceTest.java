@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -33,13 +34,14 @@ public class ApplicationServiceTest {
 
     @Test
     public void checkDuplicateEmptyTest() {
+        Mockito.when(applicationRepository.findByClientIdAndRequestedDisbursementAmountAndStatus(Mockito.anyInt(), Mockito.any(BigDecimal.class), Mockito.any(ApplicationStatus.class))).thenReturn(List.of());
         Date firstTime = new Date();
 
         Application first_application = Application.builder()
                 .id(1)
-                .client_id(1)
+                .clientId(1)
                 .status(ApplicationStatus.NEW)
-                .requested_disbursement_amount(BigDecimal.ONE)
+                .requestedDisbursementAmount(BigDecimal.ONE)
                 .creationTime(firstTime)
                 .build();
 
@@ -49,7 +51,6 @@ public class ApplicationServiceTest {
                 .lastName("123")
                 .firstName("123")
                 .id(1)
-                .applicationList(List.of())
                 .build();
 
         Optional<Integer> result = applicationService.checkDuplicate(first_application, client);
@@ -64,16 +65,17 @@ public class ApplicationServiceTest {
 
         Application first_application = Application.builder()
                 .id(1)
-                .client_id(1)
+                .clientId(1)
                 .status(ApplicationStatus.NEW)
-                .requested_disbursement_amount(BigDecimal.ONE)
+                .requestedDisbursementAmount(BigDecimal.ONE)
                 .creationTime(secondTime)
                 .build();
+        Mockito.when(applicationRepository.findByClientIdAndRequestedDisbursementAmountAndStatus(Mockito.anyInt(), Mockito.any(BigDecimal.class), Mockito.any(ApplicationStatus.class))).thenReturn(List.of(first_application));
         Application second_application = Application.builder()
                 .id(2)
-                .client_id(1)
+                .clientId(1)
                 .status(ApplicationStatus.NEW)
-                .requested_disbursement_amount(BigDecimal.ONE)
+                .requestedDisbursementAmount(BigDecimal.ONE)
                 .creationTime(firstTime)
                 .build();
 
@@ -83,7 +85,6 @@ public class ApplicationServiceTest {
                 .lastName("123")
                 .firstName("123")
                 .id(1)
-                .applicationList(List.of(first_application))
                 .build();
 
         Optional<Integer> result = applicationService.checkDuplicate(second_application, client);

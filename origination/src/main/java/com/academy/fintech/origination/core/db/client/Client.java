@@ -1,10 +1,7 @@
 package com.academy.fintech.origination.core.db.client;
 
 import com.academy.fintech.origination.core.db.application.Application;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,9 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Client {
-    @OneToMany(targetEntity = Application.class)
-    List<Application> applicationList;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "first_name")
     private String firstName;
