@@ -13,7 +13,35 @@ services:
       - db:/var/lib/postgresql/data
     expose:
       - 5432
+  db-origination:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=fintech_origination
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5433:5432'
+    volumes:
+      - db-origination:/var/lib/postgresql/data
+    expose:
+      - 5433
+  product-engine:
+    build: ./product-engine
+    ports:
+      - '8083:8083'
+  origination:
+    build: ./origination
+    ports:
+      - '8084:8084'
+  api:
+    build: ./api
+    ports:
+      - '8085:8085'
+
 
 volumes:
   db:
+    driver: local
+  db-origination:
     driver: local

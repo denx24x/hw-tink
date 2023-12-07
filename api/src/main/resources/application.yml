@@ -1,9 +1,9 @@
 server:
-  port: 8083
+  port: 8085
 
 api:
   client:
     origination:
       grpc:
-        host: localhost
+        host: host.docker.internal
         port: 9094
