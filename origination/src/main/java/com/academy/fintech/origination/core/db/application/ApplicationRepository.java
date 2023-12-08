@@ -8,4 +8,6 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 
     List<Application> findByClientIdAndRequestedDisbursementAmountAndStatus(int clientId, BigDecimal requestedDisbursementAmount, ApplicationStatus status);
+
+    List<Application> findByStatus(ApplicationStatus status);
 }

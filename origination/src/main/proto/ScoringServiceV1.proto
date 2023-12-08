@@ -5,4 +5,18 @@ package com.academy.fintech.scoring;
 option java_multiple_files = true;
 
 service ScoringService{
+  rpc RequestScoring(ScoringRequest) returns (ScoringResponse) {}
+}
+
+message ScoringRequest{
+  int32 client_id = 1;
+  string salary = 2;
+  int32 loan_term = 3;
+  string disbursement_amount = 4;
+  string interest = 5;
+  string origination_amount = 6;
+}
+
+message ScoringResponse {
+  bool result = 1;
 }

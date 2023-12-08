@@ -1,19 +1,23 @@
-package com.academy.fintech.origination.core.scoring.client.rest;
+package com.academy.fintech.origination.core.scoring.client.grpc;
 
+import com.academy.fintech.application.ApplicationServiceGrpc;
+import com.academy.fintech.origination.core.scoring.client.ScoringClientService;
+import com.academy.fintech.scoring.ScoringServiceGrpc;
+import io.grpc.Channel;
+import io.grpc.ManagedChannelBuilder;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-public class ScoringRestClient {
-    private final RestTemplate restTemplate = new RestTemplate();
-    private final int port;
-    private final String host;
+@Slf4j
+@Component
+public class ScoringGrpcClient {
 
-    public ScoringRestClient(ScoringRestClientConfiguration property) {
-        this.port = property.port();
-        this.host = property.host();
-    }
+    private final ScoringServiceGrpc.ScoringServiceBlockingStub stub;
 
-    public void createAgreement(){
-
+    public ScoringGrpcClient(ScoringGrpcClientConfiguration property) {
+        Channel channel = ManagedChannelBuilder.forAddress(property.host(), property.port()).usePlaintext().build();
+        this.stub = ScoringServiceGrpc.newBlockingStub(channel);
     }
 
 }
