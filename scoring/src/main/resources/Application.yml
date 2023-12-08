@@ -1,9 +1,10 @@
 server:
   port: 8086
-
-api:
+grpc:
+  port: 9096
+scoring:
   client:
-    origination:
-      grpc:
+    product-engine:
+      rest:
         host: host.docker.internal
-        port: 9094
+        port: 8083
