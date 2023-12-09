@@ -16,42 +16,40 @@ public class ScoringService {
     @Autowired
     private ProductEngineClientService productEngineClientService;
 
-    private BigDecimal getSalaryScoring(BigDecimal salary, int loanTerm, BigDecimal originationAmount, BigDecimal interest, BigDecimal disbursementAmount){
+    private BigDecimal getSalaryScoring(BigDecimal salary, int loanTerm, BigDecimal originationAmount, BigDecimal interest, BigDecimal disbursementAmount) {
         List<PaymentDto> paymentDtoList = productEngineClientService.calcPaymentSchedule(
                 loanTerm,
                 originationAmount.add(disbursementAmount),
                 interest
         );
-        for(PaymentDto paymentDto : paymentDtoList){
-            if(paymentDto.period_payment().compareTo(
+        for (PaymentDto paymentDto : paymentDtoList) {
+            if (paymentDto.period_payment().compareTo(
                     salary.divide(BigDecimal.valueOf(3), 10, RoundingMode.HALF_EVEN)
-            ) > 0){
+            ) > 0) {
                 return BigDecimal.ZERO;
             }
         }
         return BigDecimal.ONE;
     }
 
-    private BigDecimal getOverdueScoring(long clientId){
-        if(productEngineClientService.hasCredit(clientId)){
+    private BigDecimal getOverdueScoring(long clientId) {
+        if (productEngineClientService.hasCredit(clientId)) {
             long maxOverdue = productEngineClientService.getMaxOverdue(clientId);
-            if(maxOverdue > 7){
+            if (maxOverdue > 7) {
                 return BigDecimal.ONE.negate();
-            }else if(maxOverdue > 0){
+            } else if (maxOverdue > 0) {
                 return BigDecimal.ZERO;
-            }else{
+            } else {
                 return BigDecimal.ONE;
             }
-        }else{
+        } else {
             return BigDecimal.ONE;
         }
     }
 
-    public BigDecimal requestScoring(ScoringRequest scoringRequest){
+    public BigDecimal requestScoring(ScoringRequest scoringRequest) {
         BigDecimal scoringResult = BigDecimal.ZERO;
-        scoringResult
-                .add(getSalaryScoring(new BigDecimal(scoringRequest.getSalary()), scoringRequest.getLoanTerm(), new BigDecimal(scoringRequest.getOriginationAmount()), new BigDecimal(scoringRequest.getInterest()), new BigDecimal(scoringRequest.getDisbursementAmount())))
-                .add(getOverdueScoring(scoringRequest.getClientId()));
-        return scoringResult;
+        return scoringResult.add(getSalaryScoring(new BigDecimal(scoringRequest.getSalary()), scoringRequest.getLoanTerm(), new BigDecimal(scoringRequest.getOriginationAmount()), new BigDecimal(scoringRequest.getInterest()), new BigDecimal(scoringRequest.getDisbursementAmount())))
+                            .add(getOverdueScoring(scoringRequest.getClientId()));
     }
 }

@@ -1,10 +1,12 @@
 package com.academy.fintech.scoring.public_interface.payment.dto;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Builder
 public record PaymentDto (
         int id,
         Date payment_date,
