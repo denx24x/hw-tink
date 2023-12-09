@@ -18,5 +18,5 @@ message ScoringRequest{
 }
 
 message ScoringResponse {
-  bool result = 1;
+  string result = 1;
 }

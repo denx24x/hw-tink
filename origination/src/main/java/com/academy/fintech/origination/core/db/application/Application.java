@@ -1,5 +1,6 @@
 package com.academy.fintech.origination.core.db.application;
 
+import com.academy.fintech.origination.core.db.client.Client;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,6 +20,11 @@ public class Application {
     private int id;
     @Column(name="client_id")
     private int clientId;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
     @Column(name="requested_disbursement_amount")
     private BigDecimal requestedDisbursementAmount;
     @Enumerated(EnumType.STRING)

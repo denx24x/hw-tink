@@ -67,16 +67,16 @@ public class PaymentScheduleService {
     }
 
 
-    public List<Payment> createSchedulePayments(int loan_term, BigDecimal principal_amount, BigDecimal interest, Date initialDate){
+    public List<Payment> createSchedulePayments(int loan_term, BigDecimal principalAmount, BigDecimal interest, Date initialDate){
         BigDecimal rate = interest.divide(BigDecimal.valueOf(100), 10, RoundingMode.HALF_EVEN);
         Date currentDate = initialDate;
         List<Payment> result = new ArrayList<>();
         for (int i = 0; i < loan_term; i++) {
             currentDate = nextMonth(currentDate);
             Payment payment = Payment.builder()
-                    .period_payment(calcPMT(rate, loan_term, principal_amount, BigDecimal.valueOf(0)))
-                    .interest_payment(calcIPMT(rate, i + 1, loan_term, principal_amount, BigDecimal.valueOf(0)))
-                    .principal_payment(calcPPMT(rate, i + 1, loan_term, principal_amount, BigDecimal.valueOf(0)))
+                    .period_payment(calcPMT(rate, loan_term, principalAmount, BigDecimal.valueOf(0)))
+                    .interest_payment(calcIPMT(rate, i + 1, loan_term, principalAmount, BigDecimal.valueOf(0)))
+                    .principal_payment(calcPPMT(rate, i + 1, loan_term, principalAmount, BigDecimal.valueOf(0)))
                     .payment_date(currentDate)
                     .period_number(i + 1)
                     .status(PaymentStatus.FUTURE)

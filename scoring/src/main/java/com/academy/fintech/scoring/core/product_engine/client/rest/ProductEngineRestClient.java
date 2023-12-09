@@ -1,9 +1,13 @@
 package com.academy.fintech.scoring.core.product_engine.client.rest;
 
+import com.academy.fintech.scoring.public_interface.payment.dto.PaymentDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class ProductEngineRestClient {
@@ -15,15 +19,25 @@ public class ProductEngineRestClient {
     }
 
     public long getMaxOverdue(long clientId){
-        return restTemplate.getForObject(url + "/getMaxOverdue" + clientId, Integer.class, Map.of("clientId", clientId));
+        return restTemplate.getForObject(url + "/getMaxOverdue", Integer.class, Map.of("clientId", clientId));
     }
 
     public boolean hasCredit(long clientId){
-        return restTemplate.getForObject(url + "/hasCredit" + clientId, Boolean.class, Map.of("clientId", clientId));
+        return restTemplate.getForObject(url + "/hasCredit", Boolean.class, Map.of("clientId", clientId));
     }
 
-    public void getPeriodPayment(long clientId){
-
+    public List<PaymentDto> calcPaymentSchedule(
+            int loanTerm,
+            BigDecimal principalAmount,
+            BigDecimal interest
+    ){
+        PaymentDto[] result = restTemplate.getForObject(url + "/calculateSchedule", PaymentDto[].class, Map.of(
+                "loan_term", loanTerm,
+                "principal_amount", principalAmount,
+                "interest", interest,
+                "initialDate", new Date()
+        ));
+        return Arrays.asList(result);
     }
 
 }

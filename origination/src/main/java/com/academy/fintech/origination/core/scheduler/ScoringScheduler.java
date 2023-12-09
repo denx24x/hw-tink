@@ -24,7 +24,7 @@ public class ScoringScheduler {
     @Transactional
     private void processScoring(Application application){
         applicationService.markScoring(application);
-        BigDecimal score = scoringClientService.requestScoring(application);
+        BigDecimal score = scoringClientService.requestScoring(application, application.getClient());
         if(score.compareTo(BigDecimal.ZERO) > 0){
             applicationService.rejectApplication(application);
         }else{
