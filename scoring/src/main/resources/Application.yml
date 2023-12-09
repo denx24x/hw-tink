@@ -6,5 +6,4 @@ scoring:
   client:
     product-engine:
       rest:
-        host: host.docker.internal
-        port: 8083
+        url: "http://host.docker.internal:8083"

@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Service
 public class ScoringService {
 
-    private BigDecimal getSalaryScoring(long clientId, String salary){
+    private BigDecimal getSalaryScoring(long clientId, BigDecimal salary){
         return BigDecimal.ZERO;
     }
 
@@ -16,11 +16,11 @@ public class ScoringService {
         return BigDecimal.ZERO;
     }
 
-    public boolean requestScoring(ScoringRequest scoringRequest){
+    public BigDecimal requestScoring(ScoringRequest scoringRequest){
         BigDecimal scoringResult = BigDecimal.ZERO;
         scoringResult
-                .add(getSalaryScoring(scoringRequest.getClientId(), scoringRequest.getSalary()))
+                .add(getSalaryScoring(scoringRequest.getClientId(), new BigDecimal(scoringRequest.getSalary())))
                 .add(getOverdueScoring(scoringRequest.getClientId()));
-        return true;
+        return scoringResult;
     }
 }

@@ -4,8 +4,11 @@ import com.academy.fintech.pe.controller.creation.AgreementCreationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import static com.academy.fintech.pe.Util.nextMonth;
 
@@ -53,5 +56,24 @@ public class AgreementService {
         agreement.setDisbursement_date(disbursementDate);
         agreement.setNext_payment_date(nextMonth(disbursementDate));
         agreementRepository.save(agreement);
+    }
+
+    public long findMaxOverdue(long clientId){
+        List<Agreement> agreementList = agreementRepository.findByClientIdAndStatus(clientId, AgreementStatus.ACTIVE);
+        long result = 0;
+        for(Agreement agreement : agreementList){
+            Date currentTime = new Date();
+            if(agreement.getNext_payment_date().after(currentTime)){
+                continue;
+            }
+            long diffMillis = Math.abs(agreement.getNext_payment_date().getTime() - currentTime.getTime());
+            long diffDays = TimeUnit.DAYS.convert(diffMillis, TimeUnit.MILLISECONDS);
+            result = Math.max(diffDays, result);
+        }
+        return result;
+    }
+
+    public BigDecimal getPeriodPayment(){
+        return BigDecimal.ZERO;
     }
 }
