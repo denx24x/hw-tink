@@ -74,10 +74,6 @@ public class AgreementService {
         return result;
     }
 
-    public List<Payment> getPaymentSchedule(){
-
-    }
-
     public boolean hasCredit(long clientId){
         return agreementRepository.existsByClientIdAndStatus(clientId, AgreementStatus.ACTIVE);
     }

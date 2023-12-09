@@ -6,11 +6,15 @@ import com.academy.fintech.pe.payment.PaymentRepository;
 import com.academy.fintech.pe.payment.PaymentStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.RecursiveTask;
 
 import static com.academy.fintech.pe.Util.nextMonth;
 
@@ -63,31 +67,42 @@ public class PaymentScheduleService {
     }
 
 
-
+    public List<Payment> createSchedulePayments(int loan_term, BigDecimal principal_amount, BigDecimal interest, Date initialDate){
+        BigDecimal rate = interest.divide(BigDecimal.valueOf(100), 10, RoundingMode.HALF_EVEN);
+        Date currentDate = initialDate;
+        List<Payment> result = new ArrayList<>();
+        for (int i = 0; i < loan_term; i++) {
+            currentDate = nextMonth(currentDate);
+            Payment payment = Payment.builder()
+                    .period_payment(calcPMT(rate, loan_term, principal_amount, BigDecimal.valueOf(0)))
+                    .interest_payment(calcIPMT(rate, i + 1, loan_term, principal_amount, BigDecimal.valueOf(0)))
+                    .principal_payment(calcPPMT(rate, i + 1, loan_term, principal_amount, BigDecimal.valueOf(0)))
+                    .payment_date(currentDate)
+                    .period_number(i + 1)
+                    .status(PaymentStatus.FUTURE)
+                    .build();
+            result.add(payment);
+        }
+        return result;
+    }
     /**
      * Creates schedule object in database.
      * Creates payment objects in database in amount of {@code loan_term} and binds them to schedule.
      *
      * @return Payment schedule object, saved in database
      */
+    @Transactional
     public PaymentSchedule createSchedule(Agreement agreement, Date initialDate) {
         PaymentSchedule schedule = PaymentSchedule.builder()
                 .agreement(agreement)
                 .build();
         paymentScheduleRepository.save(schedule);
-        BigDecimal rate = agreement.getInterest().divide(BigDecimal.valueOf(100), 10, RoundingMode.HALF_EVEN);
-        Date currentDate = initialDate;
-        for (int i = 0; i < agreement.getLoan_term(); i++) {
-            currentDate = nextMonth(currentDate);
-            Payment payment = Payment.builder()
-                    .period_payment(calcPMT(rate, agreement.getLoan_term(), agreement.getPrincipal_amount(), BigDecimal.valueOf(0)))
-                    .interest_payment(calcIPMT(rate, i + 1, agreement.getLoan_term(), agreement.getPrincipal_amount(), BigDecimal.valueOf(0)))
-                    .principal_payment(calcPPMT(rate, i + 1, agreement.getLoan_term(), agreement.getPrincipal_amount(), BigDecimal.valueOf(0)))
-                    .payment_date(currentDate)
-                    .period_number(i + 1)
-                    .schedule(schedule)
-                    .status(PaymentStatus.FUTURE)
-                    .build();
+        List<Payment> paymentList = createSchedulePayments(agreement.getLoan_term(),
+                                                            agreement.getPrincipal_amount(),
+                                                            agreement.getInterest(),
+                                                            initialDate);
+        for(Payment payment : paymentList){
+            payment.setSchedule(schedule);
             paymentRepository.save(payment);
         }
         return schedule;
