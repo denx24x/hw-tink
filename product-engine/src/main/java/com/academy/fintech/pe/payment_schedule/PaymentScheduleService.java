@@ -11,10 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.RecursiveTask;
 
 import static com.academy.fintech.pe.Util.nextMonth;
 
@@ -97,8 +95,8 @@ public class PaymentScheduleService {
                 .agreement(agreement)
                 .build();
         paymentScheduleRepository.save(schedule);
-        List<Payment> paymentList = createSchedulePayments(agreement.getLoan_term(),
-                                                            agreement.getPrincipal_amount(),
+        List<Payment> paymentList = createSchedulePayments(agreement.getLoanTerm(),
+                                                            agreement.getPrincipalAmount(),
                                                             agreement.getInterest(),
                                                             initialDate);
         for(Payment payment : paymentList){

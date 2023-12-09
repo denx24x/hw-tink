@@ -25,3 +25,9 @@ origination:
       grpc:
         host: host.docker.internal
         port: 9094
+  product:
+    code: "CL"
+    version: "1.0"
+    disbursement_amount: "40000.0"
+    origination_amount: "1000.0"
+    interest: "8.5"

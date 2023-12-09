@@ -1,11 +1,9 @@
 package com.academy.fintech.pe.agreement;
 
 import com.academy.fintech.pe.controller.creation.AgreementCreationRequest;
-import com.academy.fintech.pe.payment.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,13 +23,13 @@ public class AgreementService {
      */
     public Agreement createAgreement(AgreementCreationRequest request){
         Agreement agreement = Agreement.builder()
-                .client_id(request.getClient_id())
-                .product_code(request.getProduct_code())
-                .product_version(request.getProduct_version())
-                .loan_term(request.getLoan_term())
-                .principal_amount(request.calcPrincipalAmount())
+                .clientId(request.getClient_id())
+                .productCode(request.getProduct_code())
+                .productVersion(request.getProduct_version())
+                .loanTerm(request.getLoan_term())
+                .principalAmount(request.calcPrincipalAmount())
                 .interest(request.getInterest())
-                .origination_amount(request.getOrigination_amount())
+                .originationAmount(request.getOrigination_amount())
                 .status(AgreementStatus.NEW)
                 .build();
         return agreementRepository.save(agreement);
@@ -54,8 +52,8 @@ public class AgreementService {
         }
         Agreement agreement = tempAgreement.get();
         agreement.setStatus(AgreementStatus.ACTIVE);
-        agreement.setDisbursement_date(disbursementDate);
-        agreement.setNext_payment_date(nextMonth(disbursementDate));
+        agreement.setDisbursementDate(disbursementDate);
+        agreement.setNextPaymentDate(nextMonth(disbursementDate));
         agreementRepository.save(agreement);
     }
 
@@ -64,10 +62,10 @@ public class AgreementService {
         long result = 0;
         for(Agreement agreement : agreementList){
             Date currentTime = new Date();
-            if(agreement.getNext_payment_date().after(currentTime)){
+            if(agreement.getNextPaymentDate().after(currentTime)){
                 continue;
             }
-            long diffMillis = Math.abs(agreement.getNext_payment_date().getTime() - currentTime.getTime());
+            long diffMillis = Math.abs(agreement.getNextPaymentDate().getTime() - currentTime.getTime());
             long diffDays = TimeUnit.DAYS.convert(diffMillis, TimeUnit.MILLISECONDS);
             result = Math.max(diffDays, result);
         }

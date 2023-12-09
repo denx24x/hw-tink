@@ -35,4 +35,9 @@ public class AppContainer extends GenericContainer<AppContainer> {
     public int getHttpPort() {
         return this.getMappedPort(HTTP_PORT);
     }
+
+    @Override
+    public void start() {
+        super.start();
+    }
 }

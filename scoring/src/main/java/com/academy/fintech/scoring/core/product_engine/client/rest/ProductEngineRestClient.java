@@ -1,7 +1,7 @@
 package com.academy.fintech.scoring.core.product_engine.client.rest;
 
 import com.academy.fintech.scoring.public_interface.payment.dto.PaymentDto;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -10,12 +10,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class ProductEngineRestClient {
     private final RestTemplate restTemplate = new RestTemplate();
     private final String url;
 
-    public ProductEngineRestClient(ProductEngineRestClientProperty property) {
-        this.url = property.url();
+    public ProductEngineRestClient(com.academy.fintech.scoring.core.product_engine.client.rest.ProductEngineRestClientProperty productEngineRestClientProperty) {
+        this.url = productEngineRestClientProperty.url();
     }
 
     public long getMaxOverdue(long clientId){

@@ -21,8 +21,8 @@ public class Application {
     @Column(name="client_id")
     private int clientId;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "client_id")
+    @ManyToOne(targetEntity = Client.class)
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @Column(name="requested_disbursement_amount")

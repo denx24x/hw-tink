@@ -41,7 +41,7 @@ public class AgreementServiceTest {
                 .disbursement_amount(BigDecimal.valueOf(50000))
                 .build());
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(result.getClient_id(), 10);
+        Assertions.assertEquals(result.getClientId(), 10);
     }
 
     @TestConfiguration

@@ -3,12 +3,9 @@ package com.academy.fintech.origination.core.scoring.client;
 import com.academy.fintech.origination.core.db.application.Application;
 import com.academy.fintech.origination.core.db.client.Client;
 import com.academy.fintech.origination.core.scoring.client.grpc.ScoringGrpcClient;
-import com.academy.fintech.origination.property.ProductProperty;
+import com.academy.fintech.origination.product.ProductProperty;
 import com.academy.fintech.scoring.ScoringRequest;
 import com.academy.fintech.scoring.ScoringResponse;
-import com.academy.fintech.scoring.ScoringServiceGrpc;
-import org.checkerframework.checker.units.qual.A;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

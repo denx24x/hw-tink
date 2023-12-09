@@ -2,7 +2,6 @@ package com.academy.fintech.scoring.core.scoring;
 
 import com.academy.fintech.scoring.ScoringRequest;
 import com.academy.fintech.scoring.core.product_engine.client.ProductEngineClientService;
-import com.academy.fintech.scoring.core.product_engine.client.rest.ProductEngineRestClient;
 import com.academy.fintech.scoring.public_interface.payment.dto.PaymentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
