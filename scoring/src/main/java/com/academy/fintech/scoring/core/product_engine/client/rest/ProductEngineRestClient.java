@@ -13,7 +13,7 @@ public class ProductEngineRestClient {
     public ProductEngineRestClient(ProductEngineRestClientProperty property) {
         this.url = property.url();
     }
-SG
+
     public long getMaxOverdue(long clientId){
         return restTemplate.getForObject(url + "/getMaxOverdue" + clientId, Integer.class, Map.of("clientId", clientId));
     }
