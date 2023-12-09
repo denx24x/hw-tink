@@ -22,7 +22,7 @@ public class Application {
     private int clientId;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
+    @JoinColumn(referencedColumnName = "client_id")
     private Client client;
 
     @Column(name="requested_disbursement_amount")
