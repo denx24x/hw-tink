@@ -22,4 +22,9 @@ public class CalculationController {
     public long getMaxOverdue(@RequestParam long clientId){
         return agreementService.findMaxOverdue(clientId);
     }
+
+    @GetMapping("/hasCredit")
+    public boolean hasCredit(@RequestParam long clientId){
+        return agreementService.hasCredit(clientId);
+    }
 }

@@ -10,9 +10,13 @@ public class ProductEngineRestClient {
         this.url = property.url();
     }
 SG
-    public void checkOverdue(long clientId){
+    public long getMaxOverdue(long clientId){
         restTemplate.getForEntity(url + "/checkOverdue");
 
+    }
+
+    public boolean hasCredit(long clientId){
+        restTemplate.getForEntity();
     }
 
     public void getPeriodPayment(long clientId){

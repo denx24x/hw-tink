@@ -1,6 +1,7 @@
 package com.academy.fintech.pe.agreement;
 
 import com.academy.fintech.pe.controller.creation.AgreementCreationRequest;
+import com.academy.fintech.pe.payment.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +74,11 @@ public class AgreementService {
         return result;
     }
 
-    public BigDecimal getPeriodPayment(){
-        return BigDecimal.ZERO;
+    public List<Payment> getPaymentSchedule(){
+
+    }
+
+    public boolean hasCredit(long clientId){
+        return agreementRepository.existsByClientIdAndStatus(clientId, AgreementStatus.ACTIVE);
     }
 }

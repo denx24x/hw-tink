@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface AgreementRepository extends JpaRepository<Agreement, Integer> {
     public List<Agreement> findByClientIdAndStatus(long clientId, AgreementStatus status);
+
+    public boolean existsByClientIdAndStatus(long clientId, AgreementStatus status);
 }
