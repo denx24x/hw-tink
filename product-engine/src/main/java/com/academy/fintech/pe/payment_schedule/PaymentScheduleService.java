@@ -65,7 +65,7 @@ public class PaymentScheduleService {
     }
 
 
-    public List<Payment> createSchedulePayments(int loan_term, BigDecimal principalAmount, BigDecimal interest, Date initialDate){
+    public List<Payment> createSchedulePayments(int loan_term, BigDecimal principalAmount, BigDecimal interest, Date initialDate) {
         BigDecimal rate = interest.divide(BigDecimal.valueOf(100), 10, RoundingMode.HALF_EVEN);
         Date currentDate = initialDate;
         List<Payment> result = new ArrayList<>();
@@ -83,6 +83,7 @@ public class PaymentScheduleService {
         }
         return result;
     }
+
     /**
      * Creates schedule object in database.
      * Creates payment objects in database in amount of {@code loan_term} and binds them to schedule.
@@ -96,10 +97,10 @@ public class PaymentScheduleService {
                 .build();
         paymentScheduleRepository.save(schedule);
         List<Payment> paymentList = createSchedulePayments(agreement.getLoanTerm(),
-                                                            agreement.getPrincipalAmount(),
-                                                            agreement.getInterest(),
-                                                            initialDate);
-        for(Payment payment : paymentList){
+                agreement.getPrincipalAmount(),
+                agreement.getInterest(),
+                initialDate);
+        for (Payment payment : paymentList) {
             payment.setSchedule(schedule);
             paymentRepository.save(payment);
         }

@@ -17,12 +17,12 @@ public class ScoringClientService {
 
     private ProductProperty productProperty;
 
-    public ScoringClientService(ScoringGrpcClient scoringGrpcClient, ProductProperty productProperty){
+    public ScoringClientService(ScoringGrpcClient scoringGrpcClient, ProductProperty productProperty) {
         this.scoringGrpcClient = scoringGrpcClient;
         this.productProperty = productProperty;
     }
 
-    public BigDecimal requestScoring(Application application, Client client){
+    public BigDecimal requestScoring(Application application, Client client) {
         ScoringResponse scoringResponse = scoringGrpcClient.requestScoring(
                 ScoringRequest.newBuilder()
                         .setClientId(application.getClientId())

@@ -19,9 +19,10 @@ public class AgreementService {
     /**
      * Creates agreement using provided data.
      * Product with such (code, version) should exist in database.
+     *
      * @param request data provided in request
      */
-    public Agreement createAgreement(AgreementCreationRequest request){
+    public Agreement createAgreement(AgreementCreationRequest request) {
         Agreement agreement = Agreement.builder()
                 .clientId(request.getClient_id())
                 .productCode(request.getProduct_code())
@@ -35,7 +36,7 @@ public class AgreementService {
         return agreementRepository.save(agreement);
     }
 
-    public Optional<Agreement> getAgreement(int id){
+    public Optional<Agreement> getAgreement(int id) {
         return agreementRepository.findById(id);
     }
 
@@ -45,9 +46,9 @@ public class AgreementService {
      * {@code disbursement_date} changes to provided date
      * Agreement with {@code id} should exist in database.
      */
-    public void activateAgreement(Integer id, Date disbursementDate){
+    public void activateAgreement(Integer id, Date disbursementDate) {
         Optional<Agreement> tempAgreement = agreementRepository.findById(id);
-        if(tempAgreement.isEmpty()){
+        if (tempAgreement.isEmpty()) {
             throw new RuntimeException("No such agreement");
         }
         Agreement agreement = tempAgreement.get();
@@ -57,12 +58,12 @@ public class AgreementService {
         agreementRepository.save(agreement);
     }
 
-    public long findMaxOverdue(long clientId){
+    public long findMaxOverdue(long clientId) {
         List<Agreement> agreementList = agreementRepository.findByClientIdAndStatus(clientId, AgreementStatus.ACTIVE);
         long result = 0;
-        for(Agreement agreement : agreementList){
+        for (Agreement agreement : agreementList) {
             Date currentTime = new Date();
-            if(agreement.getNextPaymentDate().after(currentTime)){
+            if (agreement.getNextPaymentDate().after(currentTime)) {
                 continue;
             }
             long diffMillis = Math.abs(agreement.getNextPaymentDate().getTime() - currentTime.getTime());
@@ -72,7 +73,7 @@ public class AgreementService {
         return result;
     }
 
-    public boolean hasCredit(long clientId){
+    public boolean hasCredit(long clientId) {
         return agreementRepository.existsByClientIdAndStatus(clientId, AgreementStatus.ACTIVE);
     }
 }

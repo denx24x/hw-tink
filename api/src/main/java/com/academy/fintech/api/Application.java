@@ -11,21 +11,21 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.FullyQualifiedAnnotationBeanNameGenerator;
 
 @SpringBootApplication(
-		exclude = {
-				GsonAutoConfiguration.class,
-				MultipartAutoConfiguration.class,
-				WebSocketServletAutoConfiguration.class,
-				NettyAutoConfiguration.class,
-				DataSourceAutoConfiguration.class,
-				HibernateJpaAutoConfiguration.class
-		}
+        exclude = {
+                GsonAutoConfiguration.class,
+                MultipartAutoConfiguration.class,
+                WebSocketServletAutoConfiguration.class,
+                NettyAutoConfiguration.class,
+                DataSourceAutoConfiguration.class,
+                HibernateJpaAutoConfiguration.class
+        }
 )
 public class Application {
 
-	public static void main(String[] args) {
-		new SpringApplicationBuilder(Application.class)
-				.beanNameGenerator(new FullyQualifiedAnnotationBeanNameGenerator())
-				.run(args);
-	}
+    public static void main(String[] args) {
+        new SpringApplicationBuilder(Application.class)
+                .beanNameGenerator(new FullyQualifiedAnnotationBeanNameGenerator())
+                .run(args);
+    }
 
 }

@@ -5,5 +5,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableConfigurationProperties({ OriginationGrpcClientProperty.class })
-public class ApiConfiguration { }
+@EnableConfigurationProperties({OriginationGrpcClientProperty.class})
+public class ApiConfiguration {
+}

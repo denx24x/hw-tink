@@ -16,11 +16,11 @@ public class ScoringController extends ScoringServiceGrpc.ScoringServiceImplBase
     private ScoringService scoringService;
 
     @Override
-    public void requestScoring(ScoringRequest scoringRequest, StreamObserver<ScoringResponse> responseObserver){
+    public void requestScoring(ScoringRequest scoringRequest, StreamObserver<ScoringResponse> responseObserver) {
 
         responseObserver.onNext(ScoringResponse.newBuilder()
-                        .setResult(scoringService.requestScoring(scoringRequest).toString())
-                        .build());
+                .setResult(scoringService.requestScoring(scoringRequest).toString())
+                .build());
 
         responseObserver.onCompleted();
     }

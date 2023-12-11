@@ -20,18 +20,13 @@ public class CalculationController {
     @Autowired
     private PaymentScheduleService paymentScheduleService;
 
-    @GetMapping("/getPeriodPayment")
-    public BigDecimal getPeriodPayment(){
-        return BigDecimal.ZERO;
-    }
-
     @GetMapping("/getMaxOverdue")
-    public long getMaxOverdue(@RequestParam long clientId){
+    public long getMaxOverdue(@RequestParam(name = "client_id") long clientId) {
         return agreementService.findMaxOverdue(clientId);
     }
 
     @GetMapping("/hasCredit")
-    public boolean hasCredit(@RequestParam long clientId){
+    public boolean hasCredit(@RequestParam(name = "client_id") long clientId) {
         return agreementService.hasCredit(clientId);
     }
 
@@ -40,10 +35,10 @@ public class CalculationController {
             @RequestParam int loan_term,
             @RequestParam(name = "principal_amount") BigDecimal principalAmount,
             @RequestParam BigDecimal interest,
-            @RequestParam(name="initial_date") Date initialDate
-    ){
+            @RequestParam(name = "initial_date") Date initialDate
+    ) {
         return paymentScheduleService.createSchedulePayments(
-              loan_term,
+                loan_term,
                 principalAmount,
                 interest,
                 initialDate

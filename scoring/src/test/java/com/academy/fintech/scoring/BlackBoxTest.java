@@ -3,14 +3,12 @@ package com.academy.fintech.scoring;
 import com.academy.fintech.scoring.containers.AppContainer;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
-import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockserver.client.MockServerClient;
-import org.testcontainers.containers.MockServerContainer;
+import org.mockserver.model.MediaType;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import java.io.IOException;
 import java.net.URI;
@@ -45,26 +43,27 @@ public class BlackBoxTest {
     }
 
     @Test
-    void TestPositive(){
+    void TestScoringFull() {
         MockServerClient mockServerClient = new MockServerClient(AppContainer.mockServer.getHost(), AppContainer.mockServer.getServerPort());
 
         mockServerClient
-                .when(request().withPath("/hasCredit").withQueryStringParameter("clientId", "1"))
-                .respond(response().withBody("{false}"));
+                .when(request().withPath("/hasCredit").withQueryStringParameter("client_id", "1"))
+                .respond(response().withBody("false").withContentType(MediaType.APPLICATION_JSON));
 
         mockServerClient
                 .when(request().withPath("/calculateSchedule")
+                        .withQueryStringParameter("principal_amount", "50000")
                         .withQueryStringParameter("loan_term", "10")
-                        .withQueryStringParameter("principal_amount", "*50000*")
                         .withQueryStringParameter("interest", "8.5")
-                        .withQueryStringParameter("initial_date", "*"))
+                        .withQueryStringParameter("initial_date", "(.*)"))
                 .respond(response().withBody("[ {\"id\": \"1\",\n" +
-                        "        \"payment_date\": \"2012-04-23T18:25:43.511Z\",\n" +
-                        "        \"period_payment\": \"1000\",\n" +
-                        "        \"interest_payment\": \"0\",\n" +
-                        "        \"principal_payment\": \"0\",\n" +
-                        "        \"status\": \"NEW\",\n" +
-                        "        \"period_number\": \"1\"}]"));
+                                "        \"payment_date\": \"2012-04-23T18:25:43.511Z\",\n" +
+                                "        \"period_payment\": \"1000\",\n" +
+                                "        \"interest_payment\": \"0\",\n" +
+                                "        \"principal_payment\": \"0\",\n" +
+                                "        \"status\": \"NEW\",\n" +
+                                "        \"period_number\": \"1\"}]")
+                        .withContentType(MediaType.APPLICATION_JSON));
 
 
         Channel channel = ManagedChannelBuilder.forAddress("localhost", Containers.appContainer.getGrpcPort()).usePlaintext().build();
@@ -79,8 +78,49 @@ public class BlackBoxTest {
                         .setLoanTerm(10)
                         .build()
         );
-        Assertions.assertEquals("3",  scoringResponse.getResult());
+        Assertions.assertEquals("2", scoringResponse.getResult());
+    }
+
+    @Test
+    void TestScoringNegative() {
+        MockServerClient mockServerClient = new MockServerClient(AppContainer.mockServer.getHost(), AppContainer.mockServer.getServerPort());
+
+        mockServerClient
+                .when(request().withPath("/hasCredit").withQueryStringParameter("client_id", "2"))
+                .respond(response().withBody("true").withContentType(MediaType.APPLICATION_JSON));
+
+        mockServerClient
+                .when(request().withPath("/getMaxOverdue").withQueryStringParameter("client_id", "2"))
+                .respond(response().withBody("10").withContentType(MediaType.APPLICATION_JSON));
+
+        mockServerClient
+                .when(request().withPath("/calculateSchedule")
+                        .withQueryStringParameter("principal_amount", "5000")
+                        .withQueryStringParameter("loan_term", "10")
+                        .withQueryStringParameter("interest", "8.5")
+                        .withQueryStringParameter("initial_date", "(.*)"))
+                .respond(response().withBody("[ {\"id\": \"1\",\n" +
+                                "        \"payment_date\": \"2012-04-23T18:25:43.511Z\",\n" +
+                                "        \"period_payment\": \"1000\",\n" +
+                                "        \"interest_payment\": \"0\",\n" +
+                                "        \"principal_payment\": \"0\",\n" +
+                                "        \"status\": \"NEW\",\n" +
+                                "        \"period_number\": \"1\"}]")
+                        .withContentType(MediaType.APPLICATION_JSON));
 
 
+        Channel channel = ManagedChannelBuilder.forAddress("localhost", Containers.appContainer.getGrpcPort()).usePlaintext().build();
+        ScoringServiceGrpc.ScoringServiceBlockingStub stub = ScoringServiceGrpc.newBlockingStub(channel);
+        ScoringResponse scoringResponse = stub.requestScoring(
+                ScoringRequest.newBuilder()
+                        .setOriginationAmount("0")
+                        .setClientId(2)
+                        .setSalary("100.0")
+                        .setDisbursementAmount("5000")
+                        .setInterest("8.5")
+                        .setLoanTerm(10)
+                        .build()
+        );
+        Assertions.assertEquals("-1", scoringResponse.getResult());
     }
 }

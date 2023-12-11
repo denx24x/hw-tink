@@ -22,20 +22,20 @@ public class ScoringScheduler {
     private ScoringClientService scoringClientService;
 
     @Transactional
-    private void processScoring(Application application){
+    private void processScoring(Application application) {
         applicationService.markScoring(application);
         BigDecimal score = scoringClientService.requestScoring(application, application.getClient());
-        if(score.compareTo(BigDecimal.ZERO) > 0){
+        if (score.compareTo(BigDecimal.ZERO) > 0) {
             applicationService.rejectApplication(application);
-        }else{
+        } else {
             applicationService.acceptApplication(application);
         }
     }
 
     @Scheduled(fixedRate = 1000)
-    public void requestScoring(){
+    public void requestScoring() {
         List<Application> applicationList = applicationService.getNewApplications();
-        for(Application application : applicationList){
+        for (Application application : applicationList) {
             processScoring(application);
         }
     }

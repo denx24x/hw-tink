@@ -1,7 +1,6 @@
 package com.academy.fintech.api.core.origination.client.grpc;
 
 import com.academy.fintech.api.core.origination.client.DuplicateApplicationException;
-import com.academy.fintech.application.*;
 import com.academy.fintech.application.ApplicationServiceGrpc.ApplicationServiceBlockingStub;
 import io.grpc.*;
 import lombok.extern.slf4j.Slf4j;

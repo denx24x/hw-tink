@@ -6,7 +6,6 @@ import com.academy.fintech.origination.core.db.application.ApplicationRepository
 import com.academy.fintech.origination.core.db.application.ApplicationStatus;
 import com.academy.fintech.origination.core.db.client.Client;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,24 +72,24 @@ public class ApplicationService {
         }
     }
 
-    public List<Application> getNewApplications(){
+    public List<Application> getNewApplications() {
         return applicationRepository.findByStatus(ApplicationStatus.NEW);
     }
 
-    public void setApplicationStatus(Application application, ApplicationStatus applicationStatus){
+    public void setApplicationStatus(Application application, ApplicationStatus applicationStatus) {
         application.setStatus(applicationStatus);
         applicationRepository.save(application);
     }
 
-    public void markScoring(Application application){
+    public void markScoring(Application application) {
         setApplicationStatus(application, ApplicationStatus.SCORING);
     }
 
-    public void acceptApplication(Application application){
+    public void acceptApplication(Application application) {
         setApplicationStatus(application, ApplicationStatus.ACCEPTED);
     }
 
-    public void rejectApplication(Application application){
+    public void rejectApplication(Application application) {
         setApplicationStatus(application, ApplicationStatus.CLOSED);
     }
 }

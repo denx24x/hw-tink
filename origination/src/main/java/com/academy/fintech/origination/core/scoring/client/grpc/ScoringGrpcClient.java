@@ -8,8 +8,6 @@ import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
 @Slf4j
 @Component
 public class ScoringGrpcClient {
@@ -21,7 +19,7 @@ public class ScoringGrpcClient {
         this.stub = ScoringServiceGrpc.newBlockingStub(channel);
     }
 
-    public ScoringResponse requestScoring(ScoringRequest scoringRequest){
+    public ScoringResponse requestScoring(ScoringRequest scoringRequest) {
         return stub.requestScoring(scoringRequest);
     }
 }

@@ -19,20 +19,22 @@ public class ProductEngineRestClient {
         this.url = productEngineRestClientProperty.url();
     }
 
-    public long getMaxOverdue(long clientId){
-        return restTemplate.getForObject(url + "/getMaxOverdue", Integer.class, Map.of("clientId", clientId));
+    public long getMaxOverdue(long clientId) {
+        return restTemplate.getForObject(url + "/getMaxOverdue?client_id={clientId}", Integer.class, Map.of("clientId", clientId));
     }
 
-    public boolean hasCredit(long clientId){
-        return restTemplate.getForObject(url + "/hasCredit", Boolean.class, Map.of("clientId", clientId));
+    public boolean hasCredit(long clientId) {
+        return restTemplate.getForObject(url + "/hasCredit?client_id={clientId}", Boolean.class, Map.of("clientId", clientId));
     }
 
     public List<PaymentDto> calcPaymentSchedule(
             int loanTerm,
             BigDecimal principalAmount,
             BigDecimal interest
-    ){
-        PaymentDto[] result = restTemplate.getForObject(url + "/calculateSchedule", PaymentDto[].class, Map.of(
+    ) {
+
+
+        PaymentDto[] result = restTemplate.getForObject(url + "/calculateSchedule?loan_term={loan_term}&principal_amount={principal_amount}&interest={interest}&initial_date={initialDate}", PaymentDto[].class, Map.of(
                 "loan_term", loanTerm,
                 "principal_amount", principalAmount,
                 "interest", interest,

@@ -12,4 +12,5 @@ public record ApplicationRequest(
         String email,
         BigDecimal salary,
         BigDecimal amount
-) { }
+) {
+}

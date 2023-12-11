@@ -5,5 +5,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableConfigurationProperties({ ProductEngineRestClientProperty.class })
-public class PropertiesConfiguration { }
+@EnableConfigurationProperties({ProductEngineRestClientProperty.class})
+public class PropertiesConfiguration {
+}

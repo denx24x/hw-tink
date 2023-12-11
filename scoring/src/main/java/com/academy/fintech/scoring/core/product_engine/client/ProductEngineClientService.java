@@ -13,17 +13,17 @@ public class ProductEngineClientService {
     @Autowired
     private ProductEngineRestClient productEngineRestClient;
 
-    public boolean hasCredit(long clientId){
+    public boolean hasCredit(long clientId) {
         return productEngineRestClient.hasCredit(clientId);
     }
 
-    public long getMaxOverdue(long clientId){
+    public long getMaxOverdue(long clientId) {
         return productEngineRestClient.getMaxOverdue(clientId);
     }
 
     public List<PaymentDto> calcPaymentSchedule(int loanTerm,
                                                 BigDecimal principalAmount,
-                                                BigDecimal interest){
+                                                BigDecimal interest) {
         return productEngineRestClient.calcPaymentSchedule(loanTerm, principalAmount, interest);
     }
 }

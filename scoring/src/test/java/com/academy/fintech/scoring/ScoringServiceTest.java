@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.AdditionalAnswers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -31,7 +29,7 @@ public class ScoringServiceTest {
     private ProductEngineClientService productEngineClientService;
 
     @Test
-    public void testSalaryScoring(){
+    public void testSalaryScoring() {
         Mockito.when(productEngineClientService.calcPaymentSchedule(
                 Mockito.anyInt(),
                 Mockito.any(BigDecimal.class),
@@ -39,13 +37,13 @@ public class ScoringServiceTest {
         )).thenReturn(
                 List.of(
                         PaymentDto.builder()
-                            .id(1)
-                            .interest_payment(BigDecimal.ZERO)
-                            .payment_date(new Date())
-                            .period_number(1)
-                            .status("NEW")
-                            .period_payment(BigDecimal.valueOf(500))
-                            .principal_payment(BigDecimal.ZERO).build(),
+                                .id(1)
+                                .interest_payment(BigDecimal.ZERO)
+                                .payment_date(new Date())
+                                .period_number(1)
+                                .status("NEW")
+                                .period_payment(BigDecimal.valueOf(500))
+                                .principal_payment(BigDecimal.ZERO).build(),
                         PaymentDto.builder()
                                 .id(2)
                                 .interest_payment(BigDecimal.ZERO)
@@ -72,7 +70,7 @@ public class ScoringServiceTest {
     }
 
     @Test
-    public void testOverdueScoring(){
+    public void testOverdueScoring() {
         Mockito.when(productEngineClientService.calcPaymentSchedule(
                 Mockito.anyInt(),
                 Mockito.any(BigDecimal.class),
@@ -109,7 +107,7 @@ public class ScoringServiceTest {
     static class AgreementServiceTestContextConfiguration {
         @Bean
         public ScoringService scoringService() {
-                return new ScoringService();
-            }
+            return new ScoringService();
+        }
     }
 }

@@ -16,7 +16,7 @@ public class ApplicationService {
         return originationClientService.createApplication(applicationDto);
     }
 
-    public boolean cancelApplication(CancelApplicationDto cancelApplicationDto){
+    public boolean cancelApplication(CancelApplicationDto cancelApplicationDto) {
         return originationClientService.cancelApplication(cancelApplicationDto);
     }
 

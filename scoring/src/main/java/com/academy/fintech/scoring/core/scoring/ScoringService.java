@@ -50,6 +50,6 @@ public class ScoringService {
     public BigDecimal requestScoring(ScoringRequest scoringRequest) {
         BigDecimal scoringResult = BigDecimal.ZERO;
         return scoringResult.add(getSalaryScoring(new BigDecimal(scoringRequest.getSalary()), scoringRequest.getLoanTerm(), new BigDecimal(scoringRequest.getOriginationAmount()), new BigDecimal(scoringRequest.getInterest()), new BigDecimal(scoringRequest.getDisbursementAmount())))
-                            .add(getOverdueScoring(scoringRequest.getClientId()));
+                .add(getOverdueScoring(scoringRequest.getClientId()));
     }
 }
