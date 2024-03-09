@@ -18,7 +18,7 @@ public class ApplicationController {
     }
 
     @DeleteMapping
-    public boolean cancel(@RequestBody CancelApplicationRequest cancelApplicationRequest){
+    public boolean cancel(@RequestBody CancelApplicationRequest cancelApplicationRequest) {
         return applicationService.cancelApplication(applicationMapper.mapRequestToDto(cancelApplicationRequest));
     }
 

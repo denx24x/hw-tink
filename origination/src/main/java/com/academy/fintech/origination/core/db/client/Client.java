@@ -1,11 +1,9 @@
 package com.academy.fintech.origination.core.db.client;
 
-import com.academy.fintech.origination.core.db.application.Application;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Getter

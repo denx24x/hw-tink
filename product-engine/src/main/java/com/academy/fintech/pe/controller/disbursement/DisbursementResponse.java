@@ -17,12 +17,12 @@ public class DisbursementResponse {
     Optional<String> errorMessage;
     Optional<Integer> scheduleId;
 
-    public DisbursementResponse(String errorMessage){
+    public DisbursementResponse(String errorMessage) {
         this.success = false;
         this.errorMessage = Optional.of(errorMessage);
     }
 
-    public DisbursementResponse(Integer agreementCode){
+    public DisbursementResponse(Integer agreementCode) {
         this.success = true;
         this.scheduleId = Optional.of(agreementCode);
     }

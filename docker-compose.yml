@@ -38,6 +38,10 @@ services:
     build: ./api
     ports:
       - '8085:8085'
+  scoring:
+    build: ./scoring
+    ports:
+      - '8086:8086'
 
 
 volumes:

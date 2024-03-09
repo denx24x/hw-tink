@@ -1,9 +1,0 @@
-server:
-  port: 8086
-
-api:
-  client:
-    origination:
-      grpc:
-        host: host.docker.internal
-        port: 9094

@@ -1,17 +1,13 @@
 package com.academy.fintech.origination;
 
 import com.academy.fintech.application.*;
-import com.academy.fintech.origination.core.application.DuplicateApplicationException;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
 import io.grpc.StatusRuntimeException;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;

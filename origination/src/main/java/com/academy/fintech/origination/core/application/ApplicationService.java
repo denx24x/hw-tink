@@ -71,4 +71,25 @@ public class ApplicationService {
             return false;
         }
     }
+
+    public List<Application> getNewApplications() {
+        return applicationRepository.findByStatus(ApplicationStatus.NEW);
+    }
+
+    public void setApplicationStatus(Application application, ApplicationStatus applicationStatus) {
+        application.setStatus(applicationStatus);
+        applicationRepository.save(application);
+    }
+
+    public void markScoring(Application application) {
+        setApplicationStatus(application, ApplicationStatus.SCORING);
+    }
+
+    public void acceptApplication(Application application) {
+        setApplicationStatus(application, ApplicationStatus.ACCEPTED);
+    }
+
+    public void rejectApplication(Application application) {
+        setApplicationStatus(application, ApplicationStatus.CLOSED);
+    }
 }

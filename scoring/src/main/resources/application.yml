@@ -1,0 +1,17 @@
+server:
+  port: 8086
+grpc:
+  port: 9096
+scoring:
+  client:
+    product-engine:
+      rest:
+        url: "http://host.docker.internal:8083"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    probes:
+      enabled: true

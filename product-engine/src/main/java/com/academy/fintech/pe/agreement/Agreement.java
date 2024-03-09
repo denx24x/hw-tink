@@ -17,15 +17,23 @@ public class Agreement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int client_id;
-    private String product_code;
-    private String product_version;
-    private int loan_term;
-    private BigDecimal principal_amount;
+    @Column(name = "client_id")
+    private int clientId;
+    @Column(name = "product_code")
+    private String productCode;
+    @Column(name = "product_version")
+    private String productVersion;
+    @Column(name = "loan_term")
+    private int loanTerm;
+    @Column(name = "principal_amount")
+    private BigDecimal principalAmount;
     private BigDecimal interest;
-    private BigDecimal origination_amount;
+    @Column(name = "origination_amount")
+    private BigDecimal originationAmount;
     @Enumerated(EnumType.STRING)
     private AgreementStatus status;
-    private Date disbursement_date;
-    private Date next_payment_date;
+    @Column(name = "disbursement_date")
+    private Date disbursementDate;
+    @Column(name = "next_payment_date")
+    private Date nextPaymentDate;
 }

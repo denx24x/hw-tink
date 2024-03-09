@@ -1,8 +1,8 @@
 package com.academy.fintech.origination.core.db.application;
 
+import com.academy.fintech.origination.core.db.client.Client;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -17,9 +17,14 @@ public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="client_id")
+    @Column(name = "client_id")
     private int clientId;
-    @Column(name="requested_disbursement_amount")
+
+    @ManyToOne(targetEntity = Client.class)
+    @JoinColumn(name = "client_id", insertable = false, updatable = false)
+    private Client client;
+
+    @Column(name = "requested_disbursement_amount")
     private BigDecimal requestedDisbursementAmount;
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status;

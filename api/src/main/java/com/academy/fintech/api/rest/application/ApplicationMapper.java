@@ -4,8 +4,6 @@ import com.academy.fintech.api.public_interface.application.dto.ApplicationDto;
 import com.academy.fintech.api.public_interface.application.dto.CancelApplicationDto;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
 @Component
 public class ApplicationMapper {
 
@@ -19,7 +17,7 @@ public class ApplicationMapper {
                 .build();
     }
 
-    public CancelApplicationDto mapRequestToDto(CancelApplicationRequest request){
+    public CancelApplicationDto mapRequestToDto(CancelApplicationRequest request) {
         return CancelApplicationDto.builder()
                 .applicationId(request.applicationId())
                 .build();
