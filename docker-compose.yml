@@ -42,10 +42,46 @@ services:
     build: ./scoring
     ports:
       - '8086:8086'
-
-
+  db-merchant-provider:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=merchant_provider
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5434:5432'
+    volumes:
+      - db-merchant-provider:/var/lib/postgresql/data
+    expose:
+      - 5434
+  merchant-provider:
+    build: ./merchant-provider
+    ports:
+      - '8090:8090'
+  db-payment-gate:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=payment_gate
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5435:5432'
+    volumes:
+      - db-payment-gate:/var/lib/postgresql/data
+    expose:
+      - 5435
+  payment-gate:
+    build: ./payment-gate
+    ports:
+      - '8091:8091'
 volumes:
   db:
     driver: local
   db-origination:
+    driver: local
+  db-merchant-provider:
+    driver: local
+  db-payment-gate:
     driver: local
