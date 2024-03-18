@@ -1,4 +1,10 @@
-package com.academy.fintech.paymentgate.public_interface.payment.v1;
+package com.academy.fintech.paymentgate.rest.payment.v1.dto;
 
-public class PaymentRequestDto {
+import java.math.BigDecimal;
+
+public record PaymentRequestDto(
+        int id,
+        String balance_id,
+        BigDecimal amount
+) {
 }

@@ -1,4 +1,4 @@
-package com.academy.fintech.paymentgate.app;
+package com.academy.fintech.paymentgate;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
