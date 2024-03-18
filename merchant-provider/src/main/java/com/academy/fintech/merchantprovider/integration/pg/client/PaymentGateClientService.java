@@ -11,6 +11,6 @@ public class PaymentGateClientService {
     private PaymentGateRestClient paymentGateRestClient;
 
     public void notifyPayment(Transfer transfer){
-        paymentGateRestClient.notifyPayment(transfer.getId(), transfer.getClientId(), transfer.getAmount());
+        paymentGateRestClient.notifyPayment(transfer.getId(), transfer.getBalanceId(), transfer.getAmount());
     }
 }

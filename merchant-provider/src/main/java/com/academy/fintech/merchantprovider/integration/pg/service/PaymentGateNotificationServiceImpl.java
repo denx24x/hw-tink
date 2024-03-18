@@ -4,7 +4,7 @@ import com.academy.fintech.merchantprovider.db.transfer.Transfer;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NotificationServiceImpl implements NotificationService {
+public class PaymentGateNotificationServiceImpl implements PaymentGateNotificationService {
     @Override
     public void notifyPayment(Transfer transfer) {
 

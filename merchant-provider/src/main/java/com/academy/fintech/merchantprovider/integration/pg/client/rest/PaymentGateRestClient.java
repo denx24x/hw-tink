@@ -16,10 +16,10 @@ public class PaymentGateRestClient {
         this.url = paymentGateRestClientProperty.url();
     }
 
-    public void notifyPayment(int id, int clientId,  BigDecimal amount){
+    public void notifyPayment(int id, String balanceId,  BigDecimal amount){
         restTemplate.postForLocation(url + "/payment", Map.of(
                 "id", id,
-                "client_id", clientId,
+                "balance_id", balanceId,
                 "amount", amount
         ));
     }

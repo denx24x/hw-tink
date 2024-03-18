@@ -21,4 +21,4 @@ transfer:
 integration:
   payment-gate:
     rest:
-      url: "http://host.docker.internal:5059/"
+      url: "http://host.docker.internal:8091/"

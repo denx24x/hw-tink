@@ -1,12 +1,10 @@
-package com.academy.fintech.merchantprovider.service.transfer;
+package com.academy.fintech.merchantprovider.service.transfer.v1;
 
 import com.academy.fintech.merchantprovider.config.transfer.TransferConfig;
 import com.academy.fintech.merchantprovider.db.transfer.Transfer;
 import com.academy.fintech.merchantprovider.db.transfer.TransferService;
 import com.academy.fintech.merchantprovider.db.transfer.TransferType;
-import com.academy.fintech.merchantprovider.integration.pg.service.NotificationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.academy.fintech.merchantprovider.integration.pg.service.PaymentGateNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,7 @@ public class TransferServiceV1Impl implements TransferServiceV1 {
     @Autowired
     private TransferService transferService;
     @Autowired
-    private NotificationService notificationService;
+    private PaymentGateNotificationService notificationService;
     private final Random random = new Random();
     private final long SECOND = 1000;
     private final int maxDelay;
@@ -33,8 +31,8 @@ public class TransferServiceV1Impl implements TransferServiceV1 {
         return finishTime;
     }
     @Override
-    public int register(int clientId, BigDecimal amount, TransferType type) {
-        Transfer result = transferService.addTransfer(clientId, amount, type, generateFinishTime());
+    public int register(String balanceId, BigDecimal amount, TransferType type) {
+        Transfer result = transferService.addTransfer(balanceId, amount, type, generateFinishTime());
         if(type == TransferType.PAYMENT){
             notificationService.notifyPayment(result);
         }

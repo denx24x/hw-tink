@@ -17,9 +17,9 @@ public class TransferServiceImpl implements TransferService {
 
 
     @Override
-    public Transfer addTransfer(int clientId, BigDecimal amount, TransferType type, Date finishTime) {
+    public Transfer addTransfer(String balanceId, BigDecimal amount, TransferType type, Date finishTime) {
         Transfer result = Transfer.builder()
-                .clientId(clientId)
+                .balanceId(balanceId)
                 .amount(amount)
                 .type(type)
                 .finishTime(finishTime)

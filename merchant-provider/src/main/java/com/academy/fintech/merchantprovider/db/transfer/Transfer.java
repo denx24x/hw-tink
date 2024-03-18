@@ -16,8 +16,8 @@ public class Transfer {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         Integer id;
-        @Column(name="client_id")
-        int clientId;
+        @Column(name="balance_id")
+        String balanceId;
         @Enumerated(EnumType.STRING)
         TransferType type;
         BigDecimal amount;
