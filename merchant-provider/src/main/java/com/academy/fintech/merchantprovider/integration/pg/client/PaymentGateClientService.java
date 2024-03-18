@@ -10,7 +10,7 @@ public class PaymentGateClientService {
     @Autowired
     private PaymentGateRestClient paymentGateRestClient;
 
-    public void notifyPayment(Transfer transfer){
+    public void notifyPayment(Transfer transfer) {
         paymentGateRestClient.notifyPayment(transfer.getId(), transfer.getBalanceId(), transfer.getAmount());
     }
 }

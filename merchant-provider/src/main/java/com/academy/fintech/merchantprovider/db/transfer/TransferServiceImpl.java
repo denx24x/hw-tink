@@ -1,12 +1,10 @@
 package com.academy.fintech.merchantprovider.db.transfer;
 
-import com.academy.fintech.merchantprovider.config.transfer.TransferConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Random;
 
 @Service
 public class TransferServiceImpl implements TransferService {

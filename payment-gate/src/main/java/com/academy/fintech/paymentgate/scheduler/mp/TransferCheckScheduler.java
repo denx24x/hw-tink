@@ -18,10 +18,10 @@ public class TransferCheckScheduler {
     private MerchantProviderTransferService merchantProviderTransferService;
 
     @Scheduled(fixedDelay = 1000)
-    public void checkUnfinishedTransfers(){
+    public void checkUnfinishedTransfers() {
         List<Transfer> unfinishedTransfers = transferService.getUnfinishedTransfers();
-        for(Transfer transfer : unfinishedTransfers){
-            if(merchantProviderTransferService.checkTransfer(transfer.getTransferId())){
+        for (Transfer transfer : unfinishedTransfers) {
+            if (merchantProviderTransferService.checkTransfer(transfer.getTransferId())) {
                 transferService.markTransferFinished(transfer);
             }
         }

@@ -14,17 +14,19 @@ public class TransferServiceImpl implements TransferService {
     private PaymentTransferService paymentTransferService;
     @Autowired
     private DisbursementTransferService disbursementTransferService;
+
     @Override
     public List<Transfer> getUnfinishedTransfers() {
         return Stream.concat(paymentTransferService.getUnfinishedTransfers().stream(), disbursementTransferService.getUnfinishedTransfers().stream()).toList();
     }
+
     @Override
     public void markTransferFinished(Transfer transfer) {
-        if(transfer instanceof PaymentTransfer){
+        if (transfer instanceof PaymentTransfer) {
             paymentTransferService.markTransferFinished((PaymentTransfer) transfer);
-        }else if(transfer instanceof  DisbursementTransferService){
+        } else if (transfer instanceof DisbursementTransferService) {
             disbursementTransferService.markTransferFinished((DisbursementTransfer) transfer);
-        }else{
+        } else {
             throw new RuntimeException("Unknown transfer type");
         }
     }

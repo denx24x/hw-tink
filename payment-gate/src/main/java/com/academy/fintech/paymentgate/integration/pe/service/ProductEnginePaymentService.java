@@ -11,7 +11,7 @@ public class ProductEnginePaymentService {
     @Autowired
     private ProductEngineClientService productEngineClientService;
 
-    public void notifyPayment(String balanceId,  BigDecimal amount){
+    public void notifyPayment(String balanceId, BigDecimal amount) {
         productEngineClientService.notifyPayment(balanceId, amount);
     }
 }

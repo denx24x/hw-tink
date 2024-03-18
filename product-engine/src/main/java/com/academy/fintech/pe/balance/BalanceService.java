@@ -2,7 +2,6 @@ package com.academy.fintech.pe.balance;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -11,7 +10,7 @@ public class BalanceService {
     @Autowired
     private BalanceRepository balanceRepository;
 
-    public void applyPayment(String balanceId, BigDecimal amount){
+    public void applyPayment(String balanceId, BigDecimal amount) {
         Balance balance = balanceRepository.findByBalanceId(balanceId);
         balance.balance = balance.balance.add(amount);
         balanceRepository.save(balance);

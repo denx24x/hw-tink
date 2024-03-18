@@ -5,4 +5,5 @@ import java.math.BigDecimal;
 public record TransferRequestDto(
         String balance_id,
         BigDecimal amount
-){};
+) {
+};

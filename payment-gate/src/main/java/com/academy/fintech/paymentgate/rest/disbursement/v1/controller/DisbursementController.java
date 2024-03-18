@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class DisbursementController {
     @Autowired
     private DisbursementServiceV1 disbursementServiceV1;
+
     @PostMapping("/disbursement")
-    public void makeDisbursement(@RequestBody DisbursementRequestDto request){
+    public void makeDisbursement(@RequestBody DisbursementRequestDto request) {
         disbursementServiceV1.makeDisbursement(request.client_balance_id(), request.amount());
     }
 }

@@ -16,7 +16,7 @@ public class ProductEngineRestClient {
         this.url = paymentGateRestClientProperty.url();
     }
 
-    public void notifyPayment(String balanceId,  BigDecimal amount){
+    public void notifyPayment(String balanceId, BigDecimal amount) {
         restTemplate.postForLocation(url + "/notifyPayment", Map.of(
                 "client_balance_id", balanceId,
                 "amount", amount

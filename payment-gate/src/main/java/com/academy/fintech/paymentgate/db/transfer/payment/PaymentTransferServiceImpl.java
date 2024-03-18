@@ -1,7 +1,6 @@
 package com.academy.fintech.paymentgate.db.transfer.payment;
 
 import com.academy.fintech.paymentgate.db.transfer.TransferStatus;
-import com.academy.fintech.paymentgate.db.transfer.disbursement.DisbursementTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.List;
 public class PaymentTransferServiceImpl implements PaymentTransferService {
     @Autowired
     private PaymentTransferRepository paymentTransferRepository;
+
     @Override
     public List<PaymentTransfer> getUnfinishedTransfers() {
         return paymentTransferRepository.findByStatus(TransferStatus.IN_PROGRESS);

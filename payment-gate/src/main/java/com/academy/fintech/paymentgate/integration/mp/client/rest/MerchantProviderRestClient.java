@@ -16,14 +16,14 @@ public class MerchantProviderRestClient {
         this.url = paymentGateRestClientProperty.url();
     }
 
-    public void makeDisbursement(String balanceId,  BigDecimal amount){
+    public void makeDisbursement(String balanceId, BigDecimal amount) {
         restTemplate.postForLocation(url + "/disbursement", Map.of(
                 "client_balance_id", balanceId,
                 "amount", amount
         ));
     }
 
-    public Boolean checkTransfer(int id){
+    public Boolean checkTransfer(int id) {
         return restTemplate.getForObject(url + "check_transfer", Boolean.class, Map.of("id", id));
     }
 }

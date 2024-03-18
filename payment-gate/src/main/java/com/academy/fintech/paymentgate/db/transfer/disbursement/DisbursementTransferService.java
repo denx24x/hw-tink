@@ -1,7 +1,5 @@
 package com.academy.fintech.paymentgate.db.transfer.disbursement;
 
-import com.academy.fintech.paymentgate.db.transfer.payment.PaymentTransfer;
-
 import java.util.List;
 
 public interface DisbursementTransferService {

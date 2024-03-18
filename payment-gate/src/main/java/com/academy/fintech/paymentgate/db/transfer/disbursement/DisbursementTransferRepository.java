@@ -1,7 +1,6 @@
 package com.academy.fintech.paymentgate.db.transfer.disbursement;
 
 import com.academy.fintech.paymentgate.db.transfer.TransferStatus;
-import com.academy.fintech.paymentgate.db.transfer.payment.PaymentTransfer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

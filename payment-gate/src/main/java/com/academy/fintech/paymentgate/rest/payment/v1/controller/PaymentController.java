@@ -14,7 +14,7 @@ public class PaymentController {
     private PaymentServiceV1 paymentService;
 
     @PostMapping("/payment")
-    public void paymentNotification(@RequestBody PaymentRequestDto request){
+    public void paymentNotification(@RequestBody PaymentRequestDto request) {
         paymentService.notifyPayment(request.balance_id(), request.amount());
     }
 }

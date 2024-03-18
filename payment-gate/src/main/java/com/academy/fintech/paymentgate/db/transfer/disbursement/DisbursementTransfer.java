@@ -8,14 +8,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="disbursement_transfer")
+@Table(name = "disbursement_transfer")
 @Builder
 @Getter
 @Setter
 public class DisbursementTransfer implements Transfer {
     @Id
     public Integer id;
-    @Column(name="agreement_id")
+    @Column(name = "agreement_id")
     public Integer agreementId;
     @Enumerated(EnumType.STRING)
     public TransferStatus status;

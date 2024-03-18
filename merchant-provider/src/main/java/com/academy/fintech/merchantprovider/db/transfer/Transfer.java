@@ -13,14 +13,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Transfer {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        Integer id;
-        @Column(name="balance_id")
-        String balanceId;
-        @Enumerated(EnumType.STRING)
-        TransferType type;
-        BigDecimal amount;
-        @Column(name = "finish_time")
-        Date finishTime;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+    @Column(name = "balance_id")
+    String balanceId;
+    @Enumerated(EnumType.STRING)
+    TransferType type;
+    BigDecimal amount;
+    @Column(name = "finish_time")
+    Date finishTime;
 }

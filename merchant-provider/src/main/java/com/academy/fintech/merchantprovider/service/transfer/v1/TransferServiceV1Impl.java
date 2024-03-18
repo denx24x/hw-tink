@@ -14,13 +14,14 @@ import java.util.Random;
 
 @Service
 public class TransferServiceV1Impl implements TransferServiceV1 {
+    private final Random random = new Random();
+    private final long SECOND = 1000;
+    private final int maxDelay;
     @Autowired
     private TransferService transferService;
     @Autowired
     private PaymentGateNotificationService notificationService;
-    private final Random random = new Random();
-    private final long SECOND = 1000;
-    private final int maxDelay;
+
     public TransferServiceV1Impl(TransferConfig transferConfig) {
         maxDelay = transferConfig.maxDelay();
     }
@@ -30,10 +31,11 @@ public class TransferServiceV1Impl implements TransferServiceV1 {
         finishTime.setTime(finishTime.getTime() + random.nextInt(this.maxDelay) * SECOND);
         return finishTime;
     }
+
     @Override
     public int register(String balanceId, BigDecimal amount, TransferType type) {
         Transfer result = transferService.addTransfer(balanceId, amount, type, generateFinishTime());
-        if(type == TransferType.PAYMENT){
+        if (type == TransferType.PAYMENT) {
             notificationService.notifyPayment(result);
         }
         return result.getId();

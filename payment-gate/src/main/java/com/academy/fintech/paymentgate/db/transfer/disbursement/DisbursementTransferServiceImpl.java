@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class DisbursementTransferServiceImpl implements DisbursementTransferService{
+public class DisbursementTransferServiceImpl implements DisbursementTransferService {
     @Autowired
     private DisbursementTransferRepository disbursementTransferRepository;
 
-    public List<DisbursementTransfer> getUnfinishedTransfers(){
+    public List<DisbursementTransfer> getUnfinishedTransfers() {
         return disbursementTransferRepository.findByStatus(TransferStatus.IN_PROGRESS);
     }
 

@@ -13,17 +13,17 @@ public class TransferController {
     private TransferServiceV1 transferService;
 
     @PostMapping("/disbursement")
-    public int disbursement(@RequestBody TransferRequestDto request){
+    public int disbursement(@RequestBody TransferRequestDto request) {
         return transferService.register(request.balance_id(), request.amount(), TransferType.DISBURSEMENT);
     }
 
     @PostMapping("/payment")
-    public int payment(@RequestBody TransferRequestDto request){
+    public int payment(@RequestBody TransferRequestDto request) {
         return transferService.register(request.balance_id(), request.amount(), TransferType.PAYMENT);
     }
 
     @GetMapping("/check_transfer")
-    public boolean checkTransfer(@RequestParam(name = "id") int id){
+    public boolean checkTransfer(@RequestParam(name = "id") int id) {
         return transferService.checkTransfer(id);
     }
 }
