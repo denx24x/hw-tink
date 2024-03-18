@@ -1,7 +1,9 @@
 plugins {
-    id 'org.springframework.boot' version '3.1.4'
+    alias(libs.plugins.spring)
     alias(libs.plugins.protobuf)
 }
+
+group 'com.academy.fintech.api'
 
 dependencies {
     implementation libs.spring.grpc
