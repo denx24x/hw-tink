@@ -12,20 +12,17 @@ subprojects {
 
     java {
         toolchain {
-            languageVersion.set(JavaLanguageVersion.of(17))
+            languageVersion.set(JavaLanguageVersion.of(21))
         }
     }
 
     dependencies {
 
-
-        testImplementation "org.springframework.boot:spring-boot-test:3.1.4"
-        testImplementation "junit:junit:4.13.1"
-        testImplementation "org.testcontainers:testcontainers:1.18.3"
-        testImplementation "org.testcontainers:postgresql:1.18.3"
-        testImplementation "org.testcontainers:junit-jupiter:1.18.3"
+        testImplementation libs.spring.test
+        testImplementation libs.jupiter
+        testImplementation libs.testcontainers.core
+        testImplementation libs.testcontainers.postgresql
         implementation libs.spring.web
-
         implementation libs.lombok
         annotationProcessor libs.lombok
     }
