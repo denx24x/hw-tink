@@ -11,7 +11,7 @@ public class BalanceService {
     private BalanceRepository balanceRepository;
 
     public void applyPayment(String balanceId, BigDecimal amount) {
-        Balance balance = balanceRepository.findByBalanceId(balanceId);
+        Balance balance = balanceRepository.getById(balanceId);
         balance.balance = balance.balance.add(amount);
         balanceRepository.save(balance);
     }
