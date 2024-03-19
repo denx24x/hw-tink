@@ -7,11 +7,15 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class ProductEnginePaymentService {
+public class ProductEngineNotificationService {
     @Autowired
     private ProductEngineClientService productEngineClientService;
 
     public void notifyPayment(String balanceId, BigDecimal amount) {
         productEngineClientService.notifyPayment(balanceId, amount);
+    }
+
+    public void notifyDisbursementFinished(int agreementId) {
+        productEngineClientService.notifyDisbursementFinished(agreementId);
     }
 }

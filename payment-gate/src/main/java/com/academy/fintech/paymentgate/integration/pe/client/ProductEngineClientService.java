@@ -14,4 +14,8 @@ public class ProductEngineClientService {
     public void notifyPayment(String balanceId, BigDecimal amount) {
         productEngineRestClient.notifyPayment(balanceId, amount);
     }
+
+    public void notifyDisbursementFinished(int agreementId){
+        productEngineRestClient.notifyDisbursementFinished(agreementId);
+    }
 }
