@@ -26,7 +26,7 @@ public class TransferServiceImpl implements TransferService {
     public void markTransferFinished(Transfer transfer) {
         if (transfer instanceof PaymentTransfer) {
             paymentTransferService.markTransferFinished((PaymentTransfer) transfer);
-        } else if (transfer instanceof DisbursementTransferService) {
+        } else if (transfer instanceof DisbursementTransfer) {
             disbursementTransferService.markTransferFinished((DisbursementTransfer) transfer);
         } else {
             throw new RuntimeException("Unknown transfer type");

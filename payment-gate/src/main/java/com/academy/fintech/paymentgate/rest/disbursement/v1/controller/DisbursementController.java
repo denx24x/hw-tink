@@ -14,6 +14,6 @@ public class DisbursementController {
 
     @PostMapping("/disbursement")
     public void makeDisbursement(@RequestBody DisbursementRequestDto request) {
-        disbursementServiceV1.makeDisbursement(request.client_balance_id(), request.amount());
+        disbursementServiceV1.makeDisbursement(request.client_balance_id(), request.agreement_id(), request.amount());
     }
 }

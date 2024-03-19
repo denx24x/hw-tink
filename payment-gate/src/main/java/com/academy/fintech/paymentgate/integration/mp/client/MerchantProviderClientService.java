@@ -11,8 +11,8 @@ public class MerchantProviderClientService {
     @Autowired
     private MerchantProviderRestClient merchantProviderRestClient;
 
-    public void makeDisbursement(String balanceId, BigDecimal amount) {
-        merchantProviderRestClient.makeDisbursement(balanceId, amount);
+    public Integer makeDisbursement(String balanceId, BigDecimal amount) {
+        return merchantProviderRestClient.makeDisbursement(balanceId, amount);
     }
 
     public Boolean checkTransfer(int id) {

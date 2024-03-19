@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public record DisbursementRequestDto(
         String client_balance_id,
+        int agreement_id,
         BigDecimal amount
 ) {
 }
