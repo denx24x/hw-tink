@@ -1,6 +1,5 @@
 package com.academy.fintech.paymentgate.db.transfer.disbursement;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface DisbursementTransferService {
