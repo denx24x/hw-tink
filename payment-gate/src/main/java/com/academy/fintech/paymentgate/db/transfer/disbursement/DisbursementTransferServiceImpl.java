@@ -2,9 +2,11 @@ package com.academy.fintech.paymentgate.db.transfer.disbursement;
 
 import com.academy.fintech.paymentgate.db.transfer.TransferStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DisbursementTransferServiceImpl implements DisbursementTransferService {
     @Autowired
     private DisbursementTransferRepository disbursementTransferRepository;

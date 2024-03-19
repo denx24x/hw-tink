@@ -5,10 +5,12 @@ import com.academy.fintech.paymentgate.db.transfer.disbursement.DisbursementTran
 import com.academy.fintech.paymentgate.db.transfer.payment.PaymentTransfer;
 import com.academy.fintech.paymentgate.db.transfer.payment.PaymentTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Stream;
 
+@Service
 public class TransferServiceImpl implements TransferService {
     @Autowired
     private PaymentTransferService paymentTransferService;
