@@ -17,7 +17,7 @@ subprojects {
     }
 
     dependencies {
-
+        testImplementation libs.testcontainers.jupyter
         testImplementation libs.spring.test
         testImplementation libs.jupiter
         testImplementation libs.testcontainers.core
