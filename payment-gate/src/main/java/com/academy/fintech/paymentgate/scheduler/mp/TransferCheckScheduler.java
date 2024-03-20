@@ -5,7 +5,6 @@ import com.academy.fintech.paymentgate.db.transfer.TransferService;
 import com.academy.fintech.paymentgate.db.transfer.disbursement.DisbursementTransfer;
 import com.academy.fintech.paymentgate.db.transfer.payment.PaymentTransfer;
 import com.academy.fintech.paymentgate.integration.mp.service.MerchantProviderTransferService;
-import com.academy.fintech.paymentgate.integration.pe.client.ProductEngineClientService;
 import com.academy.fintech.paymentgate.integration.pe.service.ProductEngineNotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -15,7 +15,7 @@ public class ProductEngineClientService {
         productEngineRestClient.notifyPayment(balanceId, amount);
     }
 
-    public void notifyDisbursementFinished(int agreementId){
+    public void notifyDisbursementFinished(int agreementId) {
         productEngineRestClient.notifyDisbursementFinished(agreementId);
     }
 }

@@ -23,7 +23,7 @@ public class ProductEngineRestClient {
         ));
     }
 
-    public void notifyDisbursementFinished(int agreementId){
+    public void notifyDisbursementFinished(int agreementId) {
         restTemplate.postForLocation(url + "/notifyDisbursementFinished", Map.of("agreement_id", agreementId));
     }
 }

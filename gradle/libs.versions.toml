@@ -30,10 +30,10 @@ grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc" }
 grpc-stub = { module = "io.grpc:grpc-stub", version.ref = "grpc" }
 
 #Test libraries
-testcontainers-postgresql = {module = "org.testcontainers:postgresql", version = "1.18.3"}
+testcontainers-postgresql = { module = "org.testcontainers:postgresql", version = "1.18.3" }
 testcontainers-core = { module = "org.testcontainers:testcontainers", version = "1.19.1" }
 testcontainers-mockserver = { module = "org.testcontainers:mockserver", version = "1.18.3" }
-testcontainers-jupyter = {module = "org.testcontainers:junit-jupiter", version = "1.19.1"}
+testcontainers-jupyter = { module = "org.testcontainers:junit-jupiter", version = "1.19.1" }
 mockserver-client = { module = "org.mock-server:mockserver-client-java", version = "5.15.0" }
 
 jupiter = { module = "org.junit.jupiter:junit-jupiter", version = "5.10.0" }

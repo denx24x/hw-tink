@@ -13,6 +13,6 @@ public class Balance {
     @Id
     String id;
     BigDecimal balance;
-    @Column(name="agreement_id")
+    @Column(name = "agreement_id")
     Integer agreementId;
 }
