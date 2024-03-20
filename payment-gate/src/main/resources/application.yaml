@@ -18,10 +18,8 @@ management:
       enabled: true
 integration:
   merchant-provider:
-    client:
-      rest:
-        url: "http://host.docker.internal:8090/"
+    rest:
+      url: "http://host.docker.internal:8090/"
   product-engine:
-    client:
-      rest:
-        url: "http://host.docker.internal:8083/"
+    rest:
+      url: "http://host.docker.internal:8083/"
