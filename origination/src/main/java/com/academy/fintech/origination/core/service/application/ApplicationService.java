@@ -1,4 +1,4 @@
-package com.academy.fintech.origination.core.application;
+package com.academy.fintech.origination.core.service.application;
 
 import com.academy.fintech.application.ApplicationRequest;
 import com.academy.fintech.origination.core.db.application.Application;

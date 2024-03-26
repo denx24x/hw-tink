@@ -1,4 +1,4 @@
-package com.academy.fintech.origination.product;
+package com.academy.fintech.origination.configuration.product;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

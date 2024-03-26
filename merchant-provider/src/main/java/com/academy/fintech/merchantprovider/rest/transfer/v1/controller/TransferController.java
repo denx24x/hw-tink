@@ -1,6 +1,7 @@
 package com.academy.fintech.merchantprovider.rest.transfer.v1.controller;
 
 import com.academy.fintech.merchantprovider.db.transfer.TransferType;
+import com.academy.fintech.merchantprovider.rest.transfer.v1.dto.TransferCheckResponseDto;
 import com.academy.fintech.merchantprovider.rest.transfer.v1.dto.TransferRequestDto;
 import com.academy.fintech.merchantprovider.service.transfer.v1.TransferServiceV1;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,11 @@ public class TransferController {
     }
 
     @GetMapping("/check_transfer")
-    public boolean checkTransfer(@RequestParam(name = "id") int id) {
-        return transferService.checkTransfer(id);
+    public TransferCheckResponseDto checkTransfer(@RequestParam(name = "id") int id) {
+        boolean result = transferService.checkTransfer(id);
+        return TransferCheckResponseDto.builder()
+                .finished(result)
+                .finishDate(result ? transferService.getTransferFinishTime(id) : null)
+                .build();
     }
 }

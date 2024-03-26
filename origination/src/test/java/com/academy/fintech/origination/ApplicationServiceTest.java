@@ -1,6 +1,6 @@
 package com.academy.fintech.origination;
 
-import com.academy.fintech.origination.core.application.ApplicationService;
+import com.academy.fintech.origination.core.service.application.ApplicationService;
 import com.academy.fintech.origination.core.db.application.Application;
 import com.academy.fintech.origination.core.db.application.ApplicationRepository;
 import com.academy.fintech.origination.core.db.application.ApplicationStatus;

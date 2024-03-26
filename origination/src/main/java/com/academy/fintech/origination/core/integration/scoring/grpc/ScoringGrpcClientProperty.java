@@ -1,4 +1,4 @@
-package com.academy.fintech.origination.core.scoring.client.grpc;
+package com.academy.fintech.origination.core.integration.scoring.grpc;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

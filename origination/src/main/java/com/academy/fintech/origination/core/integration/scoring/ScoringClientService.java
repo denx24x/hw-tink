@@ -1,9 +1,9 @@
-package com.academy.fintech.origination.core.scoring.client;
+package com.academy.fintech.origination.core.integration.scoring;
 
 import com.academy.fintech.origination.core.db.application.Application;
 import com.academy.fintech.origination.core.db.client.Client;
-import com.academy.fintech.origination.core.scoring.client.grpc.ScoringGrpcClient;
-import com.academy.fintech.origination.product.ProductProperty;
+import com.academy.fintech.origination.core.integration.scoring.grpc.ScoringGrpcClient;
+import com.academy.fintech.origination.configuration.product.ProductProperty;
 import com.academy.fintech.scoring.ScoringRequest;
 import com.academy.fintech.scoring.ScoringResponse;
 import org.springframework.stereotype.Service;

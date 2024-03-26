@@ -43,6 +43,11 @@ public class TransferServiceV1Impl implements TransferServiceV1 {
 
     @Override
     public boolean checkTransfer(int id) {
-        return transferService.getTransferFinishTime(id).compareTo(new Date()) <= 0;
+        return this.getTransferFinishTime(id).compareTo(new Date()) <= 0;
     }
+    @Override
+    public Date getTransferFinishTime(int id){
+        return transferService.getTransferFinishTime(id);
+    }
+
 }

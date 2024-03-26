@@ -1,9 +1,9 @@
 package com.academy.fintech.origination.grpc.application.v1;
 
 import com.academy.fintech.application.*;
-import com.academy.fintech.origination.core.application.ApplicationService;
-import com.academy.fintech.origination.core.application.DuplicateApplicationException;
-import com.academy.fintech.origination.core.client.ClientService;
+import com.academy.fintech.origination.core.service.application.ApplicationService;
+import com.academy.fintech.origination.core.service.application.DuplicateApplicationException;
+import com.academy.fintech.origination.core.service.client.ClientService;
 import com.academy.fintech.origination.core.db.application.Application;
 import com.academy.fintech.origination.core.db.client.Client;
 import io.grpc.Metadata;

@@ -1,4 +1,4 @@
-package com.academy.fintech.origination.core.scoring.client.grpc;
+package com.academy.fintech.origination.core.integration.scoring.grpc;
 
 import com.academy.fintech.scoring.ScoringRequest;
 import com.academy.fintech.scoring.ScoringResponse;

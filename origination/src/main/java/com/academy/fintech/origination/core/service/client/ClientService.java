@@ -1,4 +1,4 @@
-package com.academy.fintech.origination.core.client;
+package com.academy.fintech.origination.core.service.client;
 
 import com.academy.fintech.application.ApplicationRequest;
 import com.academy.fintech.origination.core.db.client.Client;
