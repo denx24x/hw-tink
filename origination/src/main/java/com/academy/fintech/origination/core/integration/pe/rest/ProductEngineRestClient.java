@@ -1,4 +1,4 @@
-package com.academy.fintech.origination.core.integration.pe.client.rest;
+package com.academy.fintech.origination.core.integration.pe.rest;
 
 import com.academy.fintech.origination.configuration.integration.pe.ProductEngineRestClientProperty;
 import org.springframework.stereotype.Component;

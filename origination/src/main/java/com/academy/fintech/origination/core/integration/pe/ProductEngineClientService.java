@@ -1,6 +1,6 @@
-package com.academy.fintech.origination.core.integration.pe.client;
+package com.academy.fintech.origination.core.integration.pe;
 
-import com.academy.fintech.origination.core.integration.pe.client.rest.ProductEngineRestClient;
+import com.academy.fintech.origination.core.integration.pe.rest.ProductEngineRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
