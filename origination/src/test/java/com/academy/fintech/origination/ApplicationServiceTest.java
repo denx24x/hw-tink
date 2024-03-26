@@ -1,10 +1,10 @@
 package com.academy.fintech.origination;
 
-import com.academy.fintech.origination.core.service.application.ApplicationService;
 import com.academy.fintech.origination.core.db.application.Application;
 import com.academy.fintech.origination.core.db.application.ApplicationRepository;
 import com.academy.fintech.origination.core.db.application.ApplicationStatus;
 import com.academy.fintech.origination.core.db.client.Client;
+import com.academy.fintech.origination.core.service.application.ApplicationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

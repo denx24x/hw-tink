@@ -1,4 +1,4 @@
-package com.academy.fintech.merchantprovider.rest.transfer.v1.dto;
+package com.academy.fintech.paymentgate.integration.mp.service;
 
 import jakarta.annotation.Nullable;
 import lombok.Builder;
@@ -6,9 +6,9 @@ import lombok.Builder;
 import java.util.Date;
 
 @Builder
-public record TransferCheckResponseDto(
+public record TransferCheckResult(
         boolean finished,
         @Nullable
-        Date finish_date
+        Date finishDate
 ) {
 }

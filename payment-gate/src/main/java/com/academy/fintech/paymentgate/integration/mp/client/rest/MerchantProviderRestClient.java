@@ -1,6 +1,7 @@
 package com.academy.fintech.paymentgate.integration.mp.client.rest;
 
 import com.academy.fintech.paymentgate.config.integration.mp.MerchantProviderRestClientProperty;
+import com.academy.fintech.paymentgate.integration.mp.dto.TransferCheckResponseDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,7 +24,7 @@ public class MerchantProviderRestClient {
         ), Integer.class);
     }
 
-    public Boolean checkTransfer(int id) {
-        return restTemplate.getForObject(url + "/check_transfer?id={id}", Boolean.class, Map.of("id", id));
+    public TransferCheckResponseDto checkTransfer(int id) {
+        return restTemplate.getForObject(url + "/check_transfer?id={id}", TransferCheckResponseDto.class, Map.of("id", id));
     }
 }

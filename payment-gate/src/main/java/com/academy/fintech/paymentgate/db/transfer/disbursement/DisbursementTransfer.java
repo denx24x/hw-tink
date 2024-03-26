@@ -5,6 +5,8 @@ import com.academy.fintech.paymentgate.db.transfer.TransferStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Builder
 @Getter
 @Setter
@@ -22,4 +24,6 @@ public class DisbursementTransfer implements Transfer {
     public Integer agreementId;
     @Enumerated(EnumType.STRING)
     public TransferStatus status;
+    @Column(name = "finish_date")
+    public Date finishDate;
 }

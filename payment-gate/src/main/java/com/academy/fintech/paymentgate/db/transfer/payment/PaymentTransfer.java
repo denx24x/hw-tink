@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 
 @Builder
@@ -27,4 +28,6 @@ public class PaymentTransfer implements Transfer {
     public BigDecimal amount;
     @Enumerated(EnumType.STRING)
     public TransferStatus status;
+    @Column(name = "finish_date")
+    public Date finishDate;
 }

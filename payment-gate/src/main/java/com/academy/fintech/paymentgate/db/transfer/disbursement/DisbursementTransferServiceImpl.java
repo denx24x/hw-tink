@@ -4,6 +4,7 @@ import com.academy.fintech.paymentgate.db.transfer.TransferStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,8 +17,9 @@ public class DisbursementTransferServiceImpl implements DisbursementTransferServ
     }
 
     @Override
-    public void markTransferFinished(DisbursementTransfer disbursementTransfer) {
+    public void markTransferFinished(DisbursementTransfer disbursementTransfer, Date finishDate) {
         disbursementTransfer.setStatus(TransferStatus.FINISHED);
+        disbursementTransfer.setFinishDate(finishDate);
         disbursementTransferRepository.save(disbursementTransfer);
     }
 

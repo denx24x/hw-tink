@@ -1,4 +1,4 @@
-package com.academy.fintech.merchantprovider.rest.transfer.v1.dto;
+package com.academy.fintech.paymentgate.integration.mp.dto;
 
 import jakarta.annotation.Nullable;
 import lombok.Builder;

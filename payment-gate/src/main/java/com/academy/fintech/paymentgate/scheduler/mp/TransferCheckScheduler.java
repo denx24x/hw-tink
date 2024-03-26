@@ -5,6 +5,7 @@ import com.academy.fintech.paymentgate.db.transfer.TransferService;
 import com.academy.fintech.paymentgate.db.transfer.disbursement.DisbursementTransfer;
 import com.academy.fintech.paymentgate.db.transfer.payment.PaymentTransfer;
 import com.academy.fintech.paymentgate.integration.mp.service.MerchantProviderTransferService;
+import com.academy.fintech.paymentgate.integration.mp.service.TransferCheckResult;
 import com.academy.fintech.paymentgate.integration.pe.service.ProductEngineNotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,13 +33,15 @@ public class TransferCheckScheduler {
         logger.info("tracking");
         List<Transfer> unfinishedTransfers = transferService.getUnfinishedTransfers();
         for (Transfer transfer : unfinishedTransfers) {
-            if (merchantProviderTransferService.checkTransfer(transfer.getTransferId())) {
-                transferService.markTransferFinished(transfer);
+            TransferCheckResult transferCheckResult = merchantProviderTransferService.checkTransfer(transfer.getTransferId());
+            if (transferCheckResult.finished()) {
+                transferService.markTransferFinished(transfer, transferCheckResult.finishDate());
                 if (transfer instanceof DisbursementTransfer disbursementTransfer) {
-                    logger.info("notify");
-                    productEngineNotificationService.notifyDisbursementFinished(disbursementTransfer.getAgreementId());
+                    logger.info("notify disbursement");
+                    productEngineNotificationService.notifyDisbursementFinished(disbursementTransfer.getAgreementId(), transferCheckResult.finishDate());
                 } else if (transfer instanceof PaymentTransfer paymentTransfer) {
-                    productEngineNotificationService.notifyPayment(paymentTransfer.getBalanceId(), paymentTransfer.getAmount());
+                    logger.info("notify payment");
+                    productEngineNotificationService.notifyPayment(paymentTransfer.getBalanceId(), paymentTransfer.getAmount(), transferCheckResult.finishDate());
                 } else {
                     throw new RuntimeException("Unknown transfer type");
                 }

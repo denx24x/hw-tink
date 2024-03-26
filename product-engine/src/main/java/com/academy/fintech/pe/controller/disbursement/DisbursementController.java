@@ -34,4 +34,9 @@ public class DisbursementController {
         agreementService.activateAgreement(request.getAgreement_id(), request.getDisbursement_date());
         return new DisbursementResponse(schedule.getId());
     }
+
+    @PostMapping("/notifyDisbursementFinished")
+    public void notifyDisbursementFinished(@RequestBody DisbursementNotificationDto request) {
+
+    }
 }

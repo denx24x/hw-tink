@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,8 +19,9 @@ public class PaymentTransferServiceImpl implements PaymentTransferService {
     }
 
     @Override
-    public void markTransferFinished(PaymentTransfer paymentTransfer) {
+    public void markTransferFinished(PaymentTransfer paymentTransfer, Date finishTime) {
         paymentTransfer.setStatus(TransferStatus.FINISHED);
+        paymentTransfer.setFinishDate(finishTime);
         paymentTransferRepository.save(paymentTransfer);
     }
 

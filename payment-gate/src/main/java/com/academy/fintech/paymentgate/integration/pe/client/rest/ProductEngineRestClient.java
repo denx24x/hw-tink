@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Map;
 
 @Component
@@ -16,14 +17,18 @@ public class ProductEngineRestClient {
         this.url = paymentGateRestClientProperty.url();
     }
 
-    public void notifyPayment(String balanceId, BigDecimal amount) {
+    public void notifyPayment(String balanceId, BigDecimal amount, Date finishDate) {
         restTemplate.postForLocation(url + "/notifyPayment", Map.of(
                 "client_balance_id", balanceId,
-                "amount", amount
+                "amount", amount,
+                "finishDate", finishDate
         ));
     }
 
-    public void notifyDisbursementFinished(int agreementId) {
-        restTemplate.postForLocation(url + "/notifyDisbursementFinished", Map.of("agreement_id", agreementId));
+    public void notifyDisbursementFinished(int agreementId, Date finishDate) {
+        restTemplate.postForLocation(url + "/notifyDisbursementFinished", Map.of(
+                "agreement_id", agreementId,
+                "finishDate", finishDate
+        ));
     }
 }

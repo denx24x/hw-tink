@@ -1,5 +1,6 @@
 package com.academy.fintech.origination.core.integration.scoring.grpc;
 
+import com.academy.fintech.origination.configuration.integration.scoring.ScoringGrpcClientProperty;
 import com.academy.fintech.scoring.ScoringRequest;
 import com.academy.fintech.scoring.ScoringResponse;
 import com.academy.fintech.scoring.ScoringServiceGrpc;

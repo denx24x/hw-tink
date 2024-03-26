@@ -28,7 +28,7 @@ public class TransferController {
         boolean result = transferService.checkTransfer(id);
         return TransferCheckResponseDto.builder()
                 .finished(result)
-                .finishDate(result ? transferService.getTransferFinishTime(id) : null)
+                .finish_date(result ? transferService.getTransferFinishTime(id) : null)
                 .build();
     }
 }
