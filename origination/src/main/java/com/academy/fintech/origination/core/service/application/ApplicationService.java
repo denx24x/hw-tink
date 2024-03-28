@@ -5,6 +5,7 @@ import com.academy.fintech.origination.core.db.application.Application;
 import com.academy.fintech.origination.core.db.application.ApplicationRepository;
 import com.academy.fintech.origination.core.db.application.ApplicationStatus;
 import com.academy.fintech.origination.core.db.client.Client;
+import com.academy.fintech.origination.core.integration.pe.service.ProductEngineAgreementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public class ApplicationService {
     @Autowired
     private ApplicationRepository applicationRepository;
 
+    @Autowired
+    private ProductEngineAgreementService productEngineAgreementService;
     /**
      * Searches for application with {@code status = NEW} and same disbursement amount.
      * If this application was created for longer than {@code DUPLICATE_TIMEOUT_MINUTES}, it is considered as duplicate.
@@ -87,6 +90,7 @@ public class ApplicationService {
 
     public void acceptApplication(Application application) {
         setApplicationStatus(application, ApplicationStatus.ACCEPTED);
+        productEngineAgreementService.createAgreement(application);
     }
 
     public void rejectApplication(Application application) {
