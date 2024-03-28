@@ -10,4 +10,6 @@ public interface AgreementRepository extends JpaRepository<Agreement, Integer> {
     public List<Agreement> findByClientIdAndStatus(long clientId, AgreementStatus status);
 
     public boolean existsByClientIdAndStatus(long clientId, AgreementStatus status);
+
+    public List<Agreement> findByStatus(AgreementStatus status);
 }

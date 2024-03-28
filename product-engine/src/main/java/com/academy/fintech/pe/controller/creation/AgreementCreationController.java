@@ -1,6 +1,7 @@
 package com.academy.fintech.pe.controller.creation;
 
 import com.academy.fintech.pe.agreement.AgreementService;
+import com.academy.fintech.pe.balance.BalanceService;
 import com.academy.fintech.pe.product.Product;
 import com.academy.fintech.pe.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class AgreementCreationController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private BalanceService balanceService;
+
     @PostMapping("/createAgreement")
     @ResponseBody
     public AgreementCreationResponse createAgreement(@RequestBody AgreementCreationRequest request) {
@@ -30,7 +34,8 @@ public class AgreementCreationController {
         if (!this.productService.checkProductConstraints(product, request)) {
             return new AgreementCreationResponse("Product constraints failed");
         }
-        Integer id = this.agreementService.createAgreement(request).getId();
+        int id = this.agreementService.createAgreement(request).getId();
+        balanceService.createBalance(id);
         return new AgreementCreationResponse(id);
     }
 
