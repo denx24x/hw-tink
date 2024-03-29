@@ -45,7 +45,7 @@ public class PaymentScheduler {
             OverdueBalance overdueBalance = overdueBalanceService.getBalanceForAgreement(agreement.getId());
             for (Payment payment : unhandledPayments) {
                 if (payment.getPeriod_payment().compareTo(balance.getBalance()) <= 0) {
-                    balanceService.applyPayment(balance, payment.getPeriod_payment());
+                    balanceService.applyAgreementPayment(balance, payment.getPeriod_payment());
                     paymentService.markPaymentPaid(payment);
                 } else {
                     overdueBalanceService.applyOverdue(overdueBalance, payment.getPeriod_payment());
