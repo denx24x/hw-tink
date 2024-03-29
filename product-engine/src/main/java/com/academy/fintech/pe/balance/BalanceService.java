@@ -10,8 +10,7 @@ public class BalanceService {
     @Autowired
     private BalanceRepository balanceRepository;
 
-    public void applyPayment(String balanceId, BigDecimal amount) {
-        Balance balance = balanceRepository.getById(balanceId);
+    public void applyPayment(Balance balance, BigDecimal amount) {
         balance.balance = balance.balance.add(amount);
         balanceRepository.save(balance);
     }

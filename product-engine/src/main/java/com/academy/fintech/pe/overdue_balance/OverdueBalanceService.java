@@ -10,9 +10,12 @@ import java.math.BigDecimal;
 public class OverdueBalanceService {
     @Autowired
     private OverdueBalanceRepository overdueBalanceRepository;
-    public void applyOverdue(int balanceId, BigDecimal amount){
-        OverdueBalance balance = overdueBalanceRepository.getReferenceById(balanceId);
-        balance.setBalance(balance.balance.add(amount.negate()));
+    public void applyOverdue(OverdueBalance balance, BigDecimal amount){
+        balance.setBalance(balance.getBalance().add(amount.negate()));
         overdueBalanceRepository.save(balance);
+    }
+
+    public OverdueBalance getBalanceForAgreement(int agreementId){
+        return overdueBalanceRepository.findFirstByAgreementId(agreementId);
     }
 }
