@@ -23,4 +23,8 @@ public class BalanceService {
                 .build();
         return balanceRepository.save(balance).id;
     }
+
+    public Balance getBalanceByAgreementId(int agreementid){
+        return balanceRepository.findFirstByAgreementId(agreementid);
+    }
 }
