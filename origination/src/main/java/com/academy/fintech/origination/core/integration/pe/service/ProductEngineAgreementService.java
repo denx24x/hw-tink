@@ -14,19 +14,19 @@ public class ProductEngineAgreementService {
 
     private ProductProperty productProperty;
 
-    public ProductEngineAgreementService(ProductProperty productProperty){
+    public ProductEngineAgreementService(ProductProperty productProperty) {
         this.productProperty = productProperty;
     }
 
-    public void createAgreement(Application application){
+    public void createAgreement(Application application) {
         productEngineClientService.createAgreement(application,
                 Product.builder()
-                .loanTerm(productProperty.loan_term())
-                .productCode(productProperty.code())
-                .productVersion(productProperty.version())
-                .originationAmount(productProperty.origination_amount())
-                .interest(productProperty.interest())
-                .build()
+                        .loanTerm(productProperty.loan_term())
+                        .productCode(productProperty.code())
+                        .productVersion(productProperty.version())
+                        .originationAmount(productProperty.origination_amount())
+                        .interest(productProperty.interest())
+                        .build()
         );
     }
 }

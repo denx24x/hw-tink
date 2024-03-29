@@ -10,17 +10,17 @@ public class PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
 
-    public void markPaymentOverdue(Payment payment){
+    public void markPaymentOverdue(Payment payment) {
         payment.setStatus(PaymentStatus.OVERDUE);
         paymentRepository.save(payment);
     }
 
-    public void markPaymentPaid(Payment payment){
+    public void markPaymentPaid(Payment payment) {
         payment.setStatus(PaymentStatus.PAID);
         paymentRepository.save(payment);
     }
 
-    public List<Payment> getFuturePaymentsForSchedule(int scheduleId){
+    public List<Payment> getFuturePaymentsForSchedule(int scheduleId) {
         return paymentRepository.findByScheduleIdAndStatus(scheduleId, PaymentStatus.FUTURE);
     }
 }

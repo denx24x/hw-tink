@@ -77,7 +77,7 @@ public class AgreementService {
         return agreementRepository.existsByClientIdAndStatus(clientId, AgreementStatus.ACTIVE);
     }
 
-    public List<Agreement> getActiveAgreements(){
+    public List<Agreement> getActiveAgreements() {
         return agreementRepository.findByStatus(AgreementStatus.ACTIVE);
     }
 }

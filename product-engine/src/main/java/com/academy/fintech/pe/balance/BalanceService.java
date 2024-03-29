@@ -15,7 +15,7 @@ public class BalanceService {
         balanceRepository.save(balance);
     }
 
-    public String createBalance(int id){
+    public String createBalance(int id) {
         Balance balance = Balance.builder()
                 .agreementId(id)
                 .balance(BigDecimal.ZERO)
@@ -23,7 +23,7 @@ public class BalanceService {
         return balanceRepository.save(balance).id;
     }
 
-    public Balance getBalanceByAgreementId(int agreementid){
+    public Balance getBalanceByAgreementId(int agreementid) {
         return balanceRepository.findFirstByAgreementId(agreementid);
     }
 }
