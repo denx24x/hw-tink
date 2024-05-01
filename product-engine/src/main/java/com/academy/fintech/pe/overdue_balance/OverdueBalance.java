@@ -1,10 +1,9 @@
-package com.academy.fintech.pe.balance;
+package com.academy.fintech.pe.overdue_balance;
 
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 
@@ -12,11 +11,10 @@ import java.math.BigDecimal;
 @Builder
 @Setter
 @Getter
-@Table(name = "balance")
-public class Balance {
+@Table(name = "overdue_balance")
+public class OverdueBalance {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     String id;
     BigDecimal balance;
     @Column(name = "agreement_id")

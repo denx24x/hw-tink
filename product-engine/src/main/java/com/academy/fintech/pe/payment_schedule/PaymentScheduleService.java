@@ -106,4 +106,8 @@ public class PaymentScheduleService {
         }
         return schedule;
     }
+
+    public PaymentSchedule getPaymentSchedule(int agreementId) {
+        return paymentScheduleRepository.findFirstByAgreementId(agreementId);
+    }
 }

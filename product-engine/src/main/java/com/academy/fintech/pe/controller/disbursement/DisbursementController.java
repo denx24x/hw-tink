@@ -35,8 +35,4 @@ public class DisbursementController {
         return new DisbursementResponse(schedule.getId());
     }
 
-    @PostMapping("/notifyDisbursementFinished")
-    public void notifyDisbursementFinished(@RequestBody DisbursementNotificationDto request) {
-
-    }
 }

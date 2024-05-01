@@ -15,4 +15,21 @@ public class BalanceService {
         balance.balance = balance.balance.add(amount);
         balanceRepository.save(balance);
     }
+
+    public void applyAgreementPayment(Balance balance, BigDecimal amount){
+        balance.setBalance(balance.getBalance().add(amount.negate()));
+        balanceRepository.save(balance);
+    }
+
+    public String createBalance(int id) {
+        Balance balance = Balance.builder()
+                .agreementId(id)
+                .balance(BigDecimal.ZERO)
+                .build();
+        return balanceRepository.save(balance).id;
+    }
+
+    public Balance getBalanceByAgreementId(int agreementid) {
+        return balanceRepository.findFirstByAgreementId(agreementid);
+    }
 }

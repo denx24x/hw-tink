@@ -26,9 +26,9 @@ public class ProductEngineRestClient {
     }
 
     public void notifyDisbursementFinished(int agreementId, Date finishDate) {
-        restTemplate.postForLocation(url + "/notifyDisbursementFinished", Map.of(
+        restTemplate.postForLocation(url + "/disbursement", Map.of(
                 "agreement_id", agreementId,
-                "finishDate", finishDate
+                "disbursement_date", finishDate
         ));
     }
 }

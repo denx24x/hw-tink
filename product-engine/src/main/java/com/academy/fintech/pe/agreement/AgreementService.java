@@ -76,4 +76,8 @@ public class AgreementService {
     public boolean hasCredit(long clientId) {
         return agreementRepository.existsByClientIdAndStatus(clientId, AgreementStatus.ACTIVE);
     }
+
+    public List<Agreement> getActiveAgreements() {
+        return agreementRepository.findByStatus(AgreementStatus.ACTIVE);
+    }
 }
