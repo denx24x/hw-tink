@@ -1,8 +1,8 @@
 package com.academy.fintech.origination.core.scheduler;
 
-import com.academy.fintech.origination.core.application.ApplicationService;
 import com.academy.fintech.origination.core.db.application.Application;
-import com.academy.fintech.origination.core.scoring.client.ScoringClientService;
+import com.academy.fintech.origination.core.integration.scoring.ScoringClientService;
+import com.academy.fintech.origination.core.service.application.ApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

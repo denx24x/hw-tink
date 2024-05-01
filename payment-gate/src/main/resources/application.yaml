@@ -1,0 +1,25 @@
+server:
+  port: 8091
+spring:
+  liquibase:
+    change-log: classpath:/db/db.changelog-master.yaml
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://host.docker.internal:5435/payment_gate
+    username: postgres
+    password: postgres
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    probes:
+      enabled: true
+integration:
+  merchant-provider:
+    rest:
+      url: "http://host.docker.internal:8090/"
+  product-engine:
+    rest:
+      url: "http://host.docker.internal:8083/"

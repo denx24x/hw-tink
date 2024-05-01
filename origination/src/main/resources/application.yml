@@ -19,12 +19,14 @@ management:
   health:
     probes:
       enabled: true
-origination:
-  client:
-    scoring:
-      grpc:
-        host: host.docker.internal
-        port: 9094
+integration:
+  product-engine:
+    rest:
+      url: "http://host.docker.internal:8083/"
+  scoring:
+    grpc:
+      host: "host.docker.internal"
+      port: 9094
   product:
     code: "CL"
     version: "1.0"

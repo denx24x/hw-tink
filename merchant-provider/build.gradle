@@ -1,0 +1,23 @@
+plugins {
+    alias(libs.plugins.spring)
+}
+
+group 'com.academy.fintech.merchant-provider'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation libs.jupiter
+    implementation libs.postgresql.driver
+    implementation libs.hibernate
+    implementation libs.liquibase
+    implementation libs.spring.jpa
+    implementation libs.spring.web
+}
+
+test {
+    useJUnitPlatform()
+}
