@@ -1,10 +1,11 @@
 CREATE TYPE TRANSFER_TYPE AS ENUM ('DISBURSEMENT', 'PAYMENT');
 CREATE CAST (varchar AS TRANSFER_TYPE) WITH INOUT AS IMPLICIT;
 
-CREATE TABLE transfer (
-    id SERIAL PRIMARY KEY,
-    balance_id VARCHAR NOT NULL,
-    type TRANSFER_TYPE NOT NULL,
-    amount NUMERIC NOT NULL,
-    finish_time TIMESTAMP NOT NULL
+CREATE TABLE transfer
+(
+    id          SERIAL PRIMARY KEY,
+    balance_id  VARCHAR       NOT NULL,
+    type        TRANSFER_TYPE NOT NULL,
+    amount      NUMERIC       NOT NULL,
+    finish_time TIMESTAMP     NOT NULL
 );

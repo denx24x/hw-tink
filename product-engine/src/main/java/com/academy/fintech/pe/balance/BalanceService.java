@@ -16,7 +16,7 @@ public class BalanceService {
         balanceRepository.save(balance);
     }
 
-    public void applyAgreementPayment(Balance balance, BigDecimal amount){
+    public void applyAgreementPayment(Balance balance, BigDecimal amount) {
         balance.setBalance(balance.getBalance().add(amount.negate()));
         balanceRepository.save(balance);
     }
