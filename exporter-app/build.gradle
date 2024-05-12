@@ -1,0 +1,15 @@
+plugins {
+    alias(libs.plugins.spring)
+}
+
+group 'com.academy.fintech.exporter-app'
+
+dependencies {
+    implementation libs.javax.annotation
+    implementation libs.postgresql.driver
+    implementation libs.hibernate
+    implementation libs.liquibase
+    implementation libs.spring.jpa
+    implementation libs.spring.json
+    implementation libs.spring.test
+}

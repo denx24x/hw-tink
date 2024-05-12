@@ -1,6 +1,8 @@
 package com.academy.fintech.pe.agreement;
 
 import com.academy.fintech.pe.controller.creation.AgreementCreationRequest;
+import com.academy.fintech.pe.exporter.ExporterService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +18,15 @@ public class AgreementService {
     @Autowired
     private AgreementRepository agreementRepository;
 
+    @Autowired
+    private ExporterService exporterService;
     /**
      * Creates agreement using provided data.
      * Product with such (code, version) should exist in database.
      *
      * @param request data provided in request
      */
+    @Transactional
     public Agreement createAgreement(AgreementCreationRequest request) {
         Agreement agreement = Agreement.builder()
                 .clientId(request.getClient_id())
@@ -33,7 +38,9 @@ public class AgreementService {
                 .originationAmount(request.getOrigination_amount())
                 .status(AgreementStatus.NEW)
                 .build();
-        return agreementRepository.save(agreement);
+        agreement = agreementRepository.save(agreement);
+        exporterService.exportAgreement(agreement);
+        return agreement;
     }
 
     public Optional<Agreement> getAgreement(int id) {
@@ -46,6 +53,7 @@ public class AgreementService {
      * {@code disbursement_date} changes to provided date
      * Agreement with {@code id} should exist in database.
      */
+    @Transactional
     public void activateAgreement(Integer id, Date disbursementDate) {
         Optional<Agreement> tempAgreement = agreementRepository.findById(id);
         if (tempAgreement.isEmpty()) {
@@ -56,6 +64,7 @@ public class AgreementService {
         agreement.setDisbursementDate(disbursementDate);
         agreement.setNextPaymentDate(nextMonth(disbursementDate));
         agreementRepository.save(agreement);
+        exporterService.exportAgreement(agreement);
     }
 
     public long findMaxOverdue(long clientId) {

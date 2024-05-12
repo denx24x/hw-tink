@@ -6,6 +6,8 @@ import com.academy.fintech.origination.core.db.application.ApplicationRepository
 import com.academy.fintech.origination.core.db.application.ApplicationStatus;
 import com.academy.fintech.origination.core.db.client.Client;
 import com.academy.fintech.origination.core.integration.pe.service.ProductEngineAgreementService;
+import com.academy.fintech.origination.exporter.ExporterService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,8 @@ public class ApplicationService {
     @Autowired
     private ProductEngineAgreementService productEngineAgreementService;
 
+    @Autowired
+    private ExporterService exporterService;
     /**
      * Searches for application with {@code status = NEW} and same disbursement amount.
      * If this application was created for longer than {@code DUPLICATE_TIMEOUT_MINUTES}, it is considered as duplicate.
@@ -52,6 +56,7 @@ public class ApplicationService {
      * Created application for provided {@code client}.
      * If application is considered duplicate, then returns original application id.
      */
+    @Transactional
     public Application createApplication(ApplicationRequest request, Client client) throws DuplicateApplicationException {
         Application applicationProto = Application.builder()
                 .clientId(client.getId())
@@ -64,7 +69,9 @@ public class ApplicationService {
             throw new DuplicateApplicationException(duplicateId.get());
         }
 
-        return applicationRepository.save(applicationProto);
+        Application application = applicationRepository.save(applicationProto);
+        exporterService.exportApplication(application);
+        return application;
     }
 
     public boolean cancelApplication(int applicationId) {

@@ -7,3 +7,7 @@ databaseChangeLog:
       file: classpath:/db/changelog/001-initial-schema.sql
   - include:
       file: classpath:/db/changelog/002-enum-fix.sql
+  - include:
+      file: classpath:/db/changelog/003-balance-table.sql
+  - include:
+      file: classpath:/db/changelog/004-overdue-balance-table.sql

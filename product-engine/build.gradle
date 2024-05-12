@@ -12,6 +12,7 @@ dependencies {
     implementation libs.spring.web
     implementation libs.spring.test
     implementation libs.spring.actuator
+    implementation project(':transactional-exporter')
 }
 jar {
     manifest {
