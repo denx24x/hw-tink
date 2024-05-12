@@ -9,7 +9,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class ExportTask {
 
     @Scheduled(fixedRateString = "${exporter.export-seconds-rate}", timeUnit = SECONDS)
-    public void export(){
+    public void export() {
 
     }
 }

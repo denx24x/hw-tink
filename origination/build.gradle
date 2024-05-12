@@ -20,6 +20,7 @@ dependencies {
     implementation libs.spring.json
     implementation libs.spring.test
     implementation libs.spring.actuator
+    implementation project(':transactional-exporter')
 }
 
 protobuf {

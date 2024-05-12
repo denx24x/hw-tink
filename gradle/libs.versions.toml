@@ -14,6 +14,7 @@ spring-grpc = { module = "io.github.lognet:grpc-spring-boot-starter", version = 
 spring-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring-boot" }
 spring-json = { module = "org.springframework.boot:spring-boot-starter-json", version.ref = "spring-boot" }
 spring-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
+spring-kafka = { module = "org.springframework.kafka:spring-kafka", version = "3.0.11" }
 
 hibernate = { module = "org.hibernate:hibernate-core", version = "6.1.0.Final" }
 

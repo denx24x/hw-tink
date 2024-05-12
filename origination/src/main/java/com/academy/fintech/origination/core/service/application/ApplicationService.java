@@ -32,6 +32,7 @@ public class ApplicationService {
 
     @Autowired
     private ExporterService exporterService;
+
     /**
      * Searches for application with {@code status = NEW} and same disbursement amount.
      * If this application was created for longer than {@code DUPLICATE_TIMEOUT_MINUTES}, it is considered as duplicate.

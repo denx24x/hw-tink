@@ -1,0 +1,15 @@
+exporter:
+  export-seconds-rate: 1
+  transaction:
+    topic: v1.transaction.agreement
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}:9092
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: false
+      auto-offset-reset: earliest
+    listener:
+      ack-mode: MANUAL_IMMEDIATE
