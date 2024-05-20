@@ -12,4 +12,4 @@ databaseChangeLog:
   - include:
       file: classpath:/db/changelog/004-overdue-balance-table.sql
   - include:
-      file: classpath:/db/changelog/005-transactional-task.sql
+      file: classpath:/db/changelog/005-transaction-task.sql

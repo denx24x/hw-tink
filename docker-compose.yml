@@ -76,22 +76,11 @@ services:
     expose:
       - 5435
   payment-gate:
+    depends_on:
+      - db-payment-gate
     build: ./payment-gate
     ports:
       - '8091:8091'
-  db-transactional:
-    image: postgres:14.1-alpine
-    restart: always
-    environment:
-      - POSTGRES_DB=transactional
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - '5436:5432'
-    volumes:
-      - db-transactional:/var/lib/postgresql/data
-    expose:
-      - 5436
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.1
     hostname: zookeeper

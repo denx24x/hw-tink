@@ -1,6 +1,4 @@
 plugins {
-    alias(libs.plugins.spring)
-    alias(libs.plugins.protobuf)
 }
 
 group 'com.academy.fintech.transactional-exporter'
@@ -13,4 +11,7 @@ dependencies {
     implementation libs.spring.json
     implementation libs.spring.test
     implementation libs.spring.kafka
+    implementation libs.jackson.databind
+
+    compileOnly libs.spring.context.indexer
 }

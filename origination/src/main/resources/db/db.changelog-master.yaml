@@ -6,4 +6,4 @@ databaseChangeLog:
   - include:
       file: classpath:/db/changelog/001-initial-schema.sql
   - include:
-      file: classpath:/db/changelog/002-transactional-task.sql
+      file: classpath:/db/changelog/002-transaction-task.sql

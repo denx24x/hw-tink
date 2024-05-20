@@ -28,10 +28,11 @@ public class ApplicationService {
     private ApplicationRepository applicationRepository;
 
     @Autowired
-    private ProductEngineAgreementService productEngineAgreementService;
+    private ExporterService exporterService;
 
     @Autowired
-    private ExporterService exporterService;
+    private ProductEngineAgreementService productEngineAgreementService;
+
 
     /**
      * Searches for application with {@code status = NEW} and same disbursement amount.
@@ -75,9 +76,13 @@ public class ApplicationService {
         return application;
     }
 
+    @Transactional
     public boolean cancelApplication(int applicationId) {
         try {
+            Application application = applicationRepository.getReferenceById(applicationId);
+            application.setStatus(ApplicationStatus.CLOSED);
             applicationRepository.deleteById(applicationId);
+            exporterService.exportApplication(application);
             return true;
         } catch (Exception e) {
             return false;
@@ -88,9 +93,11 @@ public class ApplicationService {
         return applicationRepository.findByStatus(ApplicationStatus.NEW);
     }
 
+    @Transactional
     public void setApplicationStatus(Application application, ApplicationStatus applicationStatus) {
         application.setStatus(applicationStatus);
         applicationRepository.save(application);
+        exporterService.exportApplication(application);
     }
 
     public void markScoring(Application application) {
