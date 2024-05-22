@@ -18,7 +18,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Service
 @RequiredArgsConstructor
-public class ExportTask <T extends Transaction> {
+public class ExportTask<T extends Transaction> {
     private final KafkaExporterService kafkaExporterService;
 
     private final TransactionService<T> transactionService;
@@ -45,9 +45,9 @@ public class ExportTask <T extends Transaction> {
 
         } catch (InterruptedException | ExecutionException | TimeoutException ignored) {
 
-        }finally {
-            for(int i = 0; i < countSendingElements;i++){
-                if(futures[i].isCancelled() || futures[i].isCompletedExceptionally() || !futures[i].isDone()){
+        } finally {
+            for (int i = 0; i < countSendingElements; i++) {
+                if (futures[i].isCancelled() || futures[i].isCompletedExceptionally() || !futures[i].isDone()) {
                     transactionService.updateStatusById(TransactionStatus.ERROR, transactions.get(i));
                 }
             }
