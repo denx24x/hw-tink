@@ -1,5 +1,6 @@
 create sequence s_transaction_agreement;
 CREATE TYPE TRANSACTION_STATUS AS ENUM ('NEW', 'PROCESSING', 'SUCCESS', 'ERROR');
+CREATE CAST (varchar AS TRANSACTION_STATUS) WITH INOUT AS IMPLICIT;
 create table transactions_agreement
 (
     id                 bigint                            default nextval('s_transaction_agreement'),

@@ -1,4 +1,5 @@
 CREATE TYPE TRANSACTION_STATUS AS ENUM ('NEW', 'PROCESSING', 'SUCCESS', 'ERROR');
+CREATE CAST (varchar AS TRANSACTION_STATUS) WITH INOUT AS IMPLICIT;
 create sequence s_transaction_application;
 create table transactions_application
 (

@@ -1,11 +1,12 @@
 package com.academy.fintech.transactional_exporter.task;
 
-import com.academy.fintech.transactional_exporter.ExporterService;
+import com.academy.fintech.transactional_exporter.KafkaExporterService;
 import com.academy.fintech.transactional_exporter.db.Transaction;
 import com.academy.fintech.transactional_exporter.db.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.academy.fintech.transactional_exporter.db.TransactionStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -15,30 +16,41 @@ import java.util.concurrent.TimeoutException;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-@Component
-public class ExportTask {
-    @Autowired
-    private ExporterService exporterService;
+@Service
+@RequiredArgsConstructor
+public class ExportTask <T extends Transaction> {
+    private final KafkaExporterService kafkaExporterService;
 
-    @Autowired
-    private TransactionService<? extends Transaction> transactionService;
+    private final TransactionService<T> transactionService;
 
     @Scheduled(fixedRateString = "${exporter.export-seconds-rate}", timeUnit = SECONDS)
-    public void runExport() {
-        List<? extends Transaction> newTransactions = transactionService.findWithNewStatus();
-        CompletableFuture[] futures = newTransactions.stream().map(transaction -> exporterService.export(transaction)).toArray(CompletableFuture[]::new);
-        waitSendingEnd(CompletableFuture.allOf(futures), futures.length);
+    public void runNewExport() {
+        List<T> newTransactions = transactionService.findWithStatus(TransactionStatus.NEW);
+        CompletableFuture[] futures = newTransactions.stream().map(transaction -> kafkaExporterService.export(transaction)).toArray(CompletableFuture[]::new);
+        waitSendingEnd(newTransactions, futures, futures.length);
     }
 
-    private void waitSendingEnd(CompletableFuture<Void> commonCompletableFuture, int countSendingElements) {
-        // Wait max waiting value for kafka sending + one minute for serialization and mapping of data
+    @Scheduled(fixedRateString = "${exporter.export-failed-seconds-rate}", timeUnit = SECONDS)
+    public void runFailedExport() {
+        List<T> newTransactions = transactionService.findWithStatus(TransactionStatus.ERROR);
+        CompletableFuture[] futures = newTransactions.stream().map(transaction -> kafkaExporterService.export(transaction)).toArray(CompletableFuture[]::new);
+        waitSendingEnd(newTransactions, futures, futures.length);
+    }
+
+    private void waitSendingEnd(List<T> transactions, CompletableFuture[] futures, int countSendingElements) {
         final long awaitTime = countSendingElements * 180000 + 60000;
 
         try {
-            commonCompletableFuture.get(awaitTime, MILLISECONDS);
+            CompletableFuture.allOf(futures).get(awaitTime, MILLISECONDS);
 
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            throw new RuntimeException(e);
+        } catch (InterruptedException | ExecutionException | TimeoutException ignored) {
+
+        }finally {
+            for(int i = 0; i < countSendingElements;i++){
+                if(futures[i].isCancelled() || futures[i].isCompletedExceptionally() || !futures[i].isDone()){
+                    transactionService.updateStatusById(TransactionStatus.ERROR, transactions.get(i));
+                }
+            }
         }
     }
 }

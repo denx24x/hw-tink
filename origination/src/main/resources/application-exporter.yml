@@ -1,5 +1,6 @@
 exporter:
   export-seconds-rate: 1
+  export-failed-seconds-rate: 30
   transaction:
     topic: v1.transaction.application
 spring:

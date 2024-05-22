@@ -5,15 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 
-@Component
 @Service
 @RequiredArgsConstructor
-public class ExporterService {
+public class KafkaExporterService {
 
     private final KafkaTemplate<Integer, Transaction> kafkaTemplate;
 

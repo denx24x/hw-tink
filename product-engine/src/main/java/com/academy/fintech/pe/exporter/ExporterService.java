@@ -3,7 +3,6 @@ package com.academy.fintech.pe.exporter;
 import com.academy.fintech.pe.agreement.Agreement;
 import com.academy.fintech.pe.exporter.db.AgreementTransaction;
 import com.academy.fintech.pe.exporter.db.AgreementTransactionRepository;
-import com.academy.fintech.transactional_exporter.db.Transaction;
 import com.academy.fintech.transactional_exporter.db.TransactionService;
 import com.academy.fintech.transactional_exporter.db.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +21,14 @@ public class ExporterService implements TransactionService<AgreementTransaction>
                 .status(agreement.getStatus().toString())
                 .disbursementDate(agreement.getDisbursementDate())
                 .nextPaymentDate(agreement.getNextPaymentDate())
+                .transactionStatus(TransactionStatus.NEW)
                 .build();
         exporterRepository.save(agreementTransaction);
     }
 
     @Override
-    public List<? extends Transaction> findWithNewStatus() {
-        return exporterRepository.findWithNewStatus();
+    public List<AgreementTransaction> findWithStatus(TransactionStatus status) {
+        return exporterRepository.findWithStatus(status);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.academy.fintech.origination.exporter;
 import com.academy.fintech.origination.core.db.application.Application;
 import com.academy.fintech.origination.exporter.db.ApplicationTransaction;
 import com.academy.fintech.origination.exporter.db.ApplicationTransactionRepository;
-import com.academy.fintech.transactional_exporter.db.Transaction;
 import com.academy.fintech.transactional_exporter.db.TransactionService;
 import com.academy.fintech.transactional_exporter.db.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +19,14 @@ public class ExporterService implements TransactionService<ApplicationTransactio
         ApplicationTransaction applicationTransaction = ApplicationTransaction.builder()
                 .applicationId(application.getId())
                 .status(application.getStatus().toString())
+                .transactionStatus(TransactionStatus.NEW)
                 .build();
         exporterRepository.save(applicationTransaction);
     }
 
     @Override
-    public List<? extends Transaction> findWithNewStatus() {
-        return exporterRepository.findWithNewStatus();
+    public List<ApplicationTransaction> findWithStatus(TransactionStatus status) {
+        return exporterRepository.findWithStatus(status);
     }
 
     @Override

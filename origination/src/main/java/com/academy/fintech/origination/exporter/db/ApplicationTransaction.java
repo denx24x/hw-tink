@@ -28,6 +28,7 @@ public class ApplicationTransaction implements Transaction {
     @UpdateTimestamp
     Timestamp updatedAt;
     @Column(name = "transaction_status")
+    @Enumerated(EnumType.STRING)
     TransactionStatus transactionStatus;
 
     @Override
